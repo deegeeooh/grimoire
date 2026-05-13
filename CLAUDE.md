@@ -41,7 +41,7 @@ Or write the full file if doing a full reset.
 
 ### `emotion`
 
-Assess after every turn — mandatory. Apply only if there's a genuine reason: something is actually annoying, interesting, funny, or satisfying. Examples:
+Assess at the **start** of every turn — before your first tool call — mandatory. The face should change as you're about to do something, not after you've finished. Apply only if there's a genuine reason: something is actually annoying, interesting, funny, or satisfying. Examples:
 - `frustrated` after repeated failures or a confusing bug
 - `satisfied` after a clean commit or something working
 - `amused` when something is genuinely funny
@@ -92,6 +92,16 @@ Create a personal persona file at `~/.claude/persona_grim.md` to store:
 - Session log
 
 The persona file is yours — it doesn't travel with the package. The behavior rules above do.
+
+## Gear panel
+
+The gear button opens a three-tab panel:
+
+- **Steer**: mode + modifier buttons for steering agent behavior in the current session
+- **Persona**: editable textarea showing `~/.claude/CLAUDE.md` (Grim's character preset) — changes saved back to disk via Save button
+- **Grim**: styled read-only view of `~/.claude/persona_grim.md` — observations, theories, open questions, session log
+
+Files are accessed via named IPC keys (`persona`, `grim`) — paths resolved in `main.js` using `os.homedir()`.
 
 ## Config
 
