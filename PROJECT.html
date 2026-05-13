@@ -130,7 +130,7 @@
   <li>Compact widget (Option B — minimal, face-first)</li>
   <li>Animated SVG face with emotion states</li>
   <li>Real-time state updates via file watcher</li>
-  <li>Gear panel: steer presets, persona, about me, statistics</li>
+  <li>Gear panel: steer presets, persona, about me</li>
   <li>Ask input wired to Claude API</li>
   <li>Config-driven persona (Grim as default)</li>
   <li>Agent abstraction layer (Claude now, expandable later)</li>
@@ -142,31 +142,46 @@
   <li>Other agent integrations</li>
   <li>CLI writer utility for non-Claude-Code environments</li>
   <li>Distribution packaging</li>
+  <li>Statistics tab in gear panel</li>
 </ul>
 
-<h2>Layout — Compact Widget (Option B)</h2>
-<pre>┌───────────────────┐
-│ [ctx: 14%]  [💾]  │  ← context health + memory save indicator
-│                   │
-│    ( face )       │  ← animated SVG face, dominant
-│                   │
-│  skeptical        │  ← emotion label
-│  this fn is...    │  ← thought line (truncated)
-│                   │
-│ [ask input..] [⚙] │  ← ask input + gear icon
-└───────────────────┘</pre>
+<h2>Build Status</h2>
+<table>
+  <tr><th>Item</th><th>Status</th></tr>
+  <tr><td>Compact widget</td><td>✅ done</td></tr>
+  <tr><td>Animated SVG face (6 emotions)</td><td>✅ done</td></tr>
+  <tr><td>Real-time state via file watcher</td><td>✅ done</td></tr>
+  <tr><td>Gear panel — Persona tab</td><td>✅ done</td></tr>
+  <tr><td>Gear panel — Grim tab (about me)</td><td>✅ done</td></tr>
+  <tr><td>Agent abstraction layer</td><td>✅ done</td></tr>
+  <tr><td>Gear panel — Steer presets</td><td>⚠️ UI built, IPC stubbed</td></tr>
+  <tr><td>Ask input wired to Claude API</td><td>⚠️ UI built, blocked on API key</td></tr>
+  <tr><td>Config-driven persona</td><td>⚠️ partial</td></tr>
+  <tr><td>Gear panel — Statistics tab</td><td>❌ not built</td></tr>
+</table>
 
-<p>Gear panel (overlay):</p>
-<pre>┌───────────────────┐
-│ [hurry][explore]  │  ← mode presets (mutually exclusive)
-│ [explain][just do]│
-│ [learning]        │
-│ [minimise tokens] │  ← modifier presets (stackable)
-│ ───────────────── │
-│ [persona...]      │  → persona settings
-│ [about me...]     │  → memory view (what Grim knows about you)
-│ [statistics...]   │  → session stats
-└───────────────────┘</pre>
+<h2>Layout — Compact Widget</h2>
+<pre>┌───────────────────────┐
+│ Grimoire  ◈  📌  ⊞  × │  ← title · mem indicator · pin · focus · close
+│                       │
+│       ( face )        │  ← animated SVG face, dominant
+│                       │
+│  PROJECT NAME     72% │  ← project name + completion %
+│  project line...      │  ← Grim's sardonic take (italic, 3-line clamp)
+│  » thought...         │  ← Pepijn-addressed observation (warm, 3-line)
+│  topic · action  ...  │  ← work focus · activity (monospace, blinking)
+│                       │
+│  [ask input.......] ⚙ │  ← ask input + gear button
+└───────────────────────┘</pre>
+
+<p>Gear panel (3 tabs):</p>
+<pre>┌──────────────────────────┐
+│ [Steer] [Persona] [Grim] │
+│ ─────────────────────    │
+│ Steer: mode + modifier   │  ← presets (UI built, IPC stubbed)
+│ Persona: CLAUDE.md       │  ← editable textarea, save to disk
+│ Grim: persona_grim.md    │  ← read-only (Observed, Theories, etc.)
+└──────────────────────────┘</pre>
 
 <h2>Emotion Set</h2>
 <p>
@@ -174,17 +189,14 @@
   <span class="tag">curious</span>
   <span class="tag">focused</span>
   <span class="tag">amused</span>
-  <span class="tag">skeptical</span>
   <span class="tag">satisfied</span>
   <span class="tag">frustrated</span>
-  <span class="tag">surprised</span>
-  <span class="tag">concerned</span>
 </p>
 
 <h2>Data Flow</h2>
 <pre>Claude Code hooks
       ↓
-  current.json  (state file, overwritten each tick)
+  current.json  (state file, patched via patch-state.js)
       ↓
   bridge/watcher.js  (file watcher, Node.js)
       ↓
@@ -196,20 +208,21 @@ Ask input:
 <h2>State Schema (current.json)</h2>
 <pre>{
   "session_id": "uuid",
-  "emotion": "skeptical",
-  "intensity": 0.6,
-  "activity": "reading_file",
-  "thought": "this function is doing way too much",
-  "ctx_pct": 14
+  "emotion": "idle|curious|focused|amused|satisfied|frustrated",
+  "activity": "idle|waiting|reading_file|writing|thinking|planning|running_code|searching|tool_use",
+  "project_name": "short project name",
+  "project_desc": "one-line description",
+  "project_line": "Grim's sardonic take on where the project stands",
+  "completion_pct": 0-100,
+  "topic": "current work focus (2-3 words)",
+  "idle_topic": "sardonic quip shown when waiting",
+  "thought": "Pepijn-addressed personality observation",
+  "ctx_pct": 0-100,
+  "mem_state": "dirty|clean|null"
 }</pre>
 
 <h2>Config Schema (grimoire.config.json)</h2>
 <pre>{
-  "persona": {
-    "name": "Grim",
-    "emotions": ["idle", "curious", "focused", "amused", "skeptical",
-                 "satisfied", "frustrated", "surprised", "concerned"]
-  },
   "agent": {
     "provider": "anthropic",
     "model": "claude-sonnet-4-6",
@@ -217,14 +230,14 @@ Ask input:
   },
   "steer": {
     "modes": [
-      { "id": "hurry",    "label": "I'm in a hurry",     "description": "Be concise, skip exploration" },
-      { "id": "explore",  "label": "Let's explore",       "description": "Don't rush to solutions" },
-      { "id": "explain",  "label": "Explain as you go",   "description": "Narrate decisions" },
-      { "id": "just-do",  "label": "Just do it",          "description": "Minimal confirmation, take initiative" },
-      { "id": "learning", "label": "I'm learning",        "description": "Slower, more explanation" }
+      { "id": "hurry",    "label": "I'm in a hurry",   "description": "Be concise, skip exploration" },
+      { "id": "explore",  "label": "Let's explore",     "description": "Don't rush to solutions" },
+      { "id": "explain",  "label": "Explain as you go", "description": "Narrate decisions" },
+      { "id": "just-do",  "label": "Just do it",        "description": "Minimal confirmation, take initiative" },
+      { "id": "learning", "label": "I'm learning",      "description": "Slower, more explanation" }
     ],
     "modifiers": [
-      { "id": "minimise-tokens", "label": "Minimise tokens", "description": "Short responses, no summaries" }
+      { "id": "minimise-tokens", "label": "Minimise tokens", "description": "Short responses, no summaries, cut the fluff" }
     ]
   }
 }</pre>
@@ -236,26 +249,45 @@ Ask input:
   <tr><td>Frontend</td><td>HTML/CSS/JS (vanilla)</td><td>Simple, no build step, Grim writes it</td></tr>
   <tr><td>Agent interface</td><td><code>agents/index.js</code> abstraction</td><td>Claude now, swappable later</td></tr>
   <tr><td>Bridge</td><td>Node.js <code>fs.watch</code></td><td>Watches <code>current.json</code>, pushes to renderer</td></tr>
+  <tr><td>State patching</td><td><code>hooks/patch-state.js</code></td><td>Stdin JSON patcher — merge, not overwrite</td></tr>
   <tr><td>Packaging</td><td>electron-builder</td><td>Colleagues may not have Claude Code</td></tr>
+</table>
+
+<h2>Hook Setup</h2>
+<p>All hooks live in <code>~/.claude/settings.json</code> (global — fires regardless of project).</p>
+<table>
+  <tr><th>Hook</th><th>Script</th><th>What it does</th></tr>
+  <tr><td><code>UserPromptSubmit</code></td><td><code>hooks/session-init.js</code></td><td>Auto-starts Grimoire, resets state on new session</td></tr>
+  <tr><td><code>PreToolUse</code></td><td><code>hooks/state-bridge.js</code></td><td>Writes <code>activity</code> to state</td></tr>
+  <tr><td><code>Stop</code></td><td><code>hooks/state-bridge.js</code></td><td>Sets <code>activity: waiting</code></td></tr>
+  <tr><td><code>PreCompact</code></td><td><code>hooks/state-bridge.js</code></td><td>Sets <code>ctx_pct: 95</code></td></tr>
+  <tr><td><code>PostCompact</code></td><td><code>hooks/state-bridge.js</code></td><td>Clears <code>ctx_pct</code></td></tr>
 </table>
 
 <h2>Project Structure</h2>
 <pre>grimoire/
   main.js                  ← Electron main process
+  preload.js               ← IPC bridge (contextBridge)
   package.json
-  grimoire.config.json     ← persona + agent + steer config
+  grimoire.config.json     ← agent + steer config
   renderer/
     index.html             ← compact widget
     style.css
     renderer.js            ← UI logic + gear panel
-    face.svg               ← SVG face
   agents/
     index.js               ← generic sendMessage() interface
     claude.js              ← Anthropic implementation
   bridge/
     watcher.js             ← watches current.json, sends to renderer
+    ps-runner.js           ← persistent PowerShell process for focus-terminal
+  hooks/
+    session-init.js        ← UserPromptSubmit hook
+    state-bridge.js        ← PreToolUse / Stop / PreCompact / PostCompact
+    patch-state.js         ← stdin JSON patcher
   state/
-    current.json           ← written by hooks (placeholder for now)</pre>
+    current.json           ← live state file
+  .claude/
+    settings.json          ← project permissions</pre>
 
 <h2>Roles</h2>
 <table>
@@ -265,7 +297,7 @@ Ask input:
 </table>
 
 <div class="status-bar">
-  Status: Node.js installing &mdash; ready to scaffold once confirmed.
+  Status: Running &mdash; widget live, hooks wired, session init working. Remaining MVP gaps: steer IPC, ask input (needs API key), statistics tab.
 </div>
 
 </body>
