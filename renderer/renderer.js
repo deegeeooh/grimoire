@@ -17,23 +17,18 @@ const EMOTIONS = {
   concerned:  { eyeScale: 1.17, browL: 'M25,42 Q40,36 55,34', browR: 'M65,34 Q80,36 95,42', mouth: 'M42,81 Q60,77 78,81', accent: '#f0a060' }
 }
 
-const ACTIVITY_ICONS = {
-  idle:         '○',
-  waiting:      '○',
-  reading_file: '◎',
-  writing:      '◈',
-  thinking:     '◌',
-  planning:     '◌',
-  running_code: '▷',
-  searching:    '⊙',
-  tool_use:     '⊙'
+const ACTIVITY_LABELS = {
+  idle:         null,
+  waiting:      null,
+  reading_file: 'reviewing',
+  writing:      'editing',
+  thinking:     'thinking',
+  planning:     'planning',
+  running_code: 'running',
+  searching:    'exploring',
+  tool_use:     'working',
 }
 
-const CTX_COLORS = [
-  [80, '#f07070'],
-  [60, '#f0c060'],
-  [0,  '#555555']
-]
 
 const $ = id => document.getElementById(id)
 const eyeL    = $('eye-l'),   eyeR    = $('eye-r')
@@ -71,13 +66,17 @@ function applyState(state) {
   if (state.project_name !== undefined) {
     $('project-name-text').textContent = state.project_name || '—'
   }
-  if (state.project_line !== undefined) {
-    $('project-text').textContent = state.project_line || '...'
-  }
   const cpct = state.completion_pct ?? null
-  $('completion-pct').textContent = cpct !== null ? ` · ${cpct}%` : ''
+  $('project-text').textContent = (state.project_line || '—') + (cpct !== null ? ` · ${cpct}%` : '')
 
-  $('topic-text').textContent = state.topic || '—'
+  if (state.thought !== undefined) {
+    $('thought-text').textContent = state.thought ? `» ${state.thought}` : '—'
+  }
+  const action = ACTIVITY_LABELS[state.activity] ?? null
+  const topic = state.topic || null
+  const topicEl = $('topic-text')
+  topicEl.textContent = topic && action ? `${topic} · ${action}` : topic || '—'
+  topicEl.dataset.state = action ? 'active' : 'idle'
 
   const memEl = $('mem-indicator')
   memEl.classList.remove('dirty', 'clean')

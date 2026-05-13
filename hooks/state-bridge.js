@@ -19,19 +19,6 @@ const TOOL_ACTIVITY = {
   Task:      'thinking',
 }
 
-const TOOL_THOUGHT = {
-  Read:      i => `reading ${path.basename(i.file_path || '?')}`,
-  Write:     i => `writing ${path.basename(i.file_path || '?')}`,
-  Edit:      i => `editing ${path.basename(i.file_path || '?')}`,
-  MultiEdit: i => `editing ${path.basename((i.edits?.[0]?.file_path) || '?')}`,
-  Bash:      i => (i.command || '').replace(/\s+/g, ' ').slice(0, 48),
-  Glob:      i => `globbing ${i.pattern || '?'}`,
-  Grep:      i => `searching for ${i.pattern || '?'}`,
-  WebSearch: i => `searching: ${i.query || '?'}`,
-  WebFetch:  i => `fetching ${(i.url || '').replace(/^https?:\/\//, '').slice(0, 40)}`,
-  Agent:     i => i.description || 'spawning agent...',
-  TodoWrite: _  => 'updating task list',
-}
 
 function readState() {
   try { return JSON.parse(fs.readFileSync(STATE_PATH, 'utf8')) } catch (_) { return {} }
@@ -53,9 +40,7 @@ process.stdin.on('end', () => {
       const tool = event.tool_name || ''
       const input = event.tool_input || {}
       const activity = TOOL_ACTIVITY[tool] || 'tool_use'
-      const thoughtFn = TOOL_THOUGHT[tool]
-      const topic = (thoughtFn ? thoughtFn(input) : tool).slice(0, 48)
-      patch({ session_id: event.session_id, activity, topic })
+      patch({ session_id: event.session_id, activity })
 
     } else if (hookType === 'stop') {
       patch({ session_id: event.session_id, activity: 'waiting' })
