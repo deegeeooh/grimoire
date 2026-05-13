@@ -78,7 +78,7 @@ body {
 
 .indicator {
   font-size: 11px;
-  opacity: 0.15;
+  opacity: 0.35;
   transition: opacity 0.4s, color 0.4s;
 }
 
@@ -106,12 +106,14 @@ body {
 
 #face-container {
   flex: 1;
+  min-height: 0;
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
 }
 
-#face { width: 140px; height: auto; }
+#face { width: 120px; height: auto; }
 
 #head {
   fill: #1c1c1c;
@@ -151,32 +153,43 @@ body {
 
 /* ── Project / topic ──────────────────────────────────────── */
 
-#project-name-bar {
-  padding: 0 12px 1px;
+#project-header {
   flex-shrink: 0;
+  padding: 4px 12px 3px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+}
+
+#project-name-bar {
   display: flex;
   align-items: baseline;
-  justify-content: space-between;
   gap: 6px;
 }
 
 #project-name-text {
-  font-size: 9px;
-  color: #777;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  letter-spacing: 0.05em;
+  font-size: 11px;
+  color: #b0b0b0;
+  font-weight: 500;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  flex: 1;
-  min-width: 0;
 }
 
 #completion-pct {
-  font-size: 9px;
+  font-size: 11px;
   color: var(--accent);
   font-variant-numeric: tabular-nums;
-  flex-shrink: 0;
+  font-weight: 500;
+}
+
+#project-desc-bar {
+  display: flex;
+}
+
+#project-desc-text {
+  font-size: 9px;
+  color: #555;
   letter-spacing: 0.03em;
 }
 
@@ -226,7 +239,7 @@ body {
   letter-spacing: 0.03em;
   line-height: 1.45;
   display: -webkit-box;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
@@ -234,13 +247,13 @@ body {
 #topic-text[data-state="active"]::after {
   content: ' ·';
   animation: pulse-dot 0.9s ease-in-out infinite;
-  opacity: 1;
+  color: #909090;
 }
 
 #topic-text[data-state="idle"]::after {
   content: ' ···';
   animation: blink-dots 2s step-end infinite;
-  opacity: 0.5;
+  color: #808080;
 }
 
 @keyframes pulse-dot {

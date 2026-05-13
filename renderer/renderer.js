@@ -64,10 +64,13 @@ function applyState(state) {
   $('title-label').style.color = showCtx ? '#f07070' : ''
 
   if (state.project_name !== undefined) {
+    const cpct = state.completion_pct ?? null
     $('project-name-text').textContent = state.project_name || '—'
+    $('completion-pct').textContent = cpct !== null ? `- ${cpct}%` : ''
   }
-  const cpct = state.completion_pct ?? null
-  $('completion-pct').textContent = cpct !== null ? `${cpct}%` : ''
+  if (state.project_desc !== undefined) {
+    $('project-desc-text').textContent = state.project_desc || ''
+  }
   $('project-text').textContent = state.project_line || '—'
 
   if (state.thought !== undefined) {
