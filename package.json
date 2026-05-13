@@ -1,0 +1,15 @@
+{
+  "name": "grimoire",
+  "version": "0.1.0",
+  "description": "Companion app for the Grim AI persona",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "devDependencies": {
+    "electron": "^42.0.1"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.39.0"
+  }
+}
