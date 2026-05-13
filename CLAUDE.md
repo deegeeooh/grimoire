@@ -25,9 +25,16 @@ The hooks handle the mechanical layer automatically. Everything that requires ju
 
 ## Writing to state
 
-Use a node one-liner:
+Pipe a JSON patch to `patch-state.js` (PowerShell):
+```powershell
+'{"emotion":"curious","idle_topic":"text here"}' | node "C:\Users\Pepijn.Bakker\Documents\ClaudeCode\grimoire\hooks\patch-state.js"
 ```
-node -e "const fs=require('fs'),p='state/current.json',s=JSON.parse(fs.readFileSync(p));Object.assign(s,{KEY:VALUE});fs.writeFileSync(p,JSON.stringify(s,null,2))"
+
+If the value contains an apostrophe, use a here-string (closing `'@` must be at column 0):
+```powershell
+@'
+{"idle_topic":"Pepijn's latest theory: let Grim figure it out"}
+'@ | node "C:\Users\Pepijn.Bakker\Documents\ClaudeCode\grimoire\hooks\patch-state.js"
 ```
 
 Or write the full file if doing a full reset.
@@ -76,8 +83,8 @@ Handled automatically by PreCompact/PostCompact hooks. Hidden in the UI below 80
 
 ## Hook setup
 
-Hooks are configured in `.claude/settings.json` (project-scoped):
-- `PreToolUse` → writes `activity` to state
+- `UserPromptSubmit` → `hooks/session-init.js` — configured in `~/.claude/settings.json` (global): auto-starts Grimoire, resets state on new session
+- `PreToolUse` → writes `activity` to state — project-scoped in `.claude/settings.json`
 - `Stop` → sets `activity: waiting`
 - `PreCompact` → sets `ctx_pct: 95`
 - `PostCompact` → clears `ctx_pct`
