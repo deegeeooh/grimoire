@@ -104,10 +104,33 @@ const gearPanel = $('gear-panel')
 let activeMode = null
 const activeModifiers = new Set()
 
-gearBtn.addEventListener('click', () => {
-  gearPanel.classList.toggle('hidden')
-  gearBtn.classList.toggle('active')
+// ── Panel tabs ─────────────────────────────────────────────
+
+let activeTab = 'steer'
+
+async function switchTab(tab) {
+  document.querySelectorAll('.panel-tab').forEach(b => b.classList.toggle('active', b.dataset.tab === tab))
+  document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'))
+  $(`tab-${tab}`).classList.remove('hidden')
+  activeTab = tab
+
+  if (tab === 'persona') await loadPersona()
+  if (tab === 'grim')    await loadGrim()
+}
+
+document.querySelectorAll('.panel-tab').forEach(btn => {
+  btn.addEventListener('click', () => switchTab(btn.dataset.tab))
 })
+
+gearBtn.addEventListener('click', () => {
+  const opening = gearPanel.classList.toggle('hidden')
+  gearBtn.classList.toggle('active', !gearPanel.classList.contains('hidden'))
+  if (!gearPanel.classList.contains('hidden') && activeTab !== 'steer') {
+    switchTab(activeTab)
+  }
+})
+
+// ── Steer ──────────────────────────────────────────────────
 
 document.querySelectorAll('.mode-btn').forEach(btn => {
   btn.addEventListener('click', () => {
@@ -136,6 +159,65 @@ document.querySelectorAll('.modifier-btn').forEach(btn => {
     window.grimoire.setSteer({ mode: activeMode, modifiers: [...activeModifiers] })
   })
 })
+
+// ── Persona tab ────────────────────────────────────────────
+
+const personaEditor = $('persona-editor')
+const personaSave   = $('persona-save')
+
+async function loadPersona() {
+  try {
+    personaEditor.value = await window.grimoire.readFile('persona')
+  } catch (e) {
+    personaEditor.value = `(error loading file: ${e.message})`
+  }
+}
+
+personaSave.addEventListener('click', async () => {
+  personaSave.textContent = '...'
+  try {
+    await window.grimoire.writeFile('persona', personaEditor.value)
+    personaSave.textContent = 'Saved'
+    setTimeout(() => { personaSave.textContent = 'Save' }, 1200)
+  } catch (e) {
+    personaSave.textContent = 'Error'
+    setTimeout(() => { personaSave.textContent = 'Save' }, 1500)
+  }
+})
+
+// ── Grim tab ───────────────────────────────────────────────
+
+const grimContent = $('grim-content')
+
+function renderGrim(text) {
+  grimContent.innerHTML = ''
+  for (const line of text.split('\n')) {
+    const el = document.createElement('div')
+    if (line.startsWith('## ')) {
+      el.className = 'grim-header'
+      el.textContent = line.slice(3)
+    } else if (line.startsWith('# ')) {
+      el.className = 'grim-title'
+      el.textContent = line.slice(2)
+    } else if (line.startsWith('- **')) {
+      el.className = 'grim-entry'
+      el.textContent = line
+    } else {
+      el.className = 'grim-line'
+      el.textContent = line
+    }
+    grimContent.appendChild(el)
+  }
+}
+
+async function loadGrim() {
+  try {
+    const text = await window.grimoire.readFile('grim')
+    renderGrim(text)
+  } catch (e) {
+    grimContent.textContent = `(error loading file: ${e.message})`
+  }
+}
 
 // ── Ask ────────────────────────────────────────────────────
 

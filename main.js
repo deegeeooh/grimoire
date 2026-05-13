@@ -6,6 +6,12 @@ app.commandLine.appendSwitch('disable-gpu-sandbox')
 app.setPath('userData', require('path').join(require('os').homedir(), '.grimoire'))
 const path = require('path')
 const fs = require('fs')
+const os = require('os')
+
+const MANAGED_FILES = {
+  persona: path.join(os.homedir(), '.claude', 'CLAUDE.md'),
+  grim:    path.join(os.homedir(), '.claude', 'persona_grim.md'),
+}
 const psRunner = require('./bridge/ps-runner')
 
 let win
@@ -97,4 +103,16 @@ ipcMain.on('set-always-on-top', (_, pinned) => {
 
 ipcMain.on('focus-terminal', () => {
   psRunner.run('Focus-Terminal')
+})
+
+ipcMain.handle('read-file', (_, key) => {
+  const filePath = MANAGED_FILES[key]
+  if (!filePath) throw new Error(`Unknown file key: ${key}`)
+  return fs.readFileSync(filePath, 'utf8')
+})
+
+ipcMain.handle('write-file', (_, key, content) => {
+  const filePath = MANAGED_FILES[key]
+  if (!filePath) throw new Error(`Unknown file key: ${key}`)
+  fs.writeFileSync(filePath, content, 'utf8')
 })

@@ -49,17 +49,34 @@
       <button id="gear-btn" title="Steer">⚙</button>
     </div>
 
-    <!-- Gear panel (overlay from bottom) -->
+    <!-- Gear panel (overlay) -->
     <div id="gear-panel" class="hidden">
-      <div id="steer-modes">
-        <button class="mode-btn" data-mode="hurry">I'm in a hurry</button>
-        <button class="mode-btn" data-mode="explore">Let's explore</button>
-        <button class="mode-btn" data-mode="explain">Explain as you go</button>
-        <button class="mode-btn" data-mode="just-do">Just do it</button>
-        <button class="mode-btn" data-mode="learning">I'm learning</button>
+      <div id="panel-tabs">
+        <button class="panel-tab active" data-tab="steer">Steer</button>
+        <button class="panel-tab" data-tab="persona">Persona</button>
+        <button class="panel-tab" data-tab="grim">Grim</button>
       </div>
-      <div id="steer-modifiers">
-        <button class="modifier-btn" data-modifier="minimise-tokens">Minimise tokens</button>
+
+      <div class="tab-content" id="tab-steer">
+        <div id="steer-modes">
+          <button class="mode-btn" data-mode="hurry">I'm in a hurry</button>
+          <button class="mode-btn" data-mode="explore">Let's explore</button>
+          <button class="mode-btn" data-mode="explain">Explain as you go</button>
+          <button class="mode-btn" data-mode="just-do">Just do it</button>
+          <button class="mode-btn" data-mode="learning">I'm learning</button>
+        </div>
+        <div id="steer-modifiers">
+          <button class="modifier-btn" data-modifier="minimise-tokens">Minimise tokens</button>
+        </div>
+      </div>
+
+      <div class="tab-content hidden" id="tab-persona">
+        <textarea id="persona-editor" spellcheck="false"></textarea>
+        <button id="persona-save">Save</button>
+      </div>
+
+      <div class="tab-content hidden" id="tab-grim">
+        <div id="grim-content"></div>
       </div>
     </div>
 

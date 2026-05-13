@@ -10,5 +10,7 @@ contextBridge.exposeInMainWorld('grimoire', {
   getConfig:     ()       => ipcRenderer.invoke('get-config'),
   setAlwaysOnTop:(pinned) => ipcRenderer.send('set-always-on-top', pinned),
   focusTerminal: ()       => ipcRenderer.send('focus-terminal'),
-  saveMemory:    ()       => ipcRenderer.send('save-memory')
+  saveMemory:    ()       => ipcRenderer.send('save-memory'),
+  readFile:      (key)             => ipcRenderer.invoke('read-file', key),
+  writeFile:     (key, content)    => ipcRenderer.invoke('write-file', key, content)
 })

@@ -41,7 +41,7 @@ Or write the full file if doing a full reset.
 
 ### `emotion`
 
-Update when the mood of the work genuinely shifts — don't update mechanically per tool call. Examples:
+Assess after every turn — mandatory. Apply only if there's a genuine reason: something is actually annoying, interesting, funny, or satisfying. Examples:
 - `frustrated` after repeated failures or a confusing bug
 - `satisfied` after a clean commit or something working
 - `amused` when something is genuinely funny
