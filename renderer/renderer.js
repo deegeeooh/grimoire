@@ -64,10 +64,13 @@ function applyState(state) {
   applyEmotion(state.emotion || 'idle')
 
   const pct = state.ctx_pct ?? null
-  $('ctx-label').textContent = pct !== null ? `ctx: ${pct}%` : ''
-  const ctxColor = (CTX_COLORS.find(([t]) => pct >= t) || CTX_COLORS.at(-1))[1]
-  $('ctx-label').style.color = ctxColor
+  const showCtx = pct !== null && pct >= 80
+  $('title-label').textContent = showCtx ? `ctx: ${pct}%` : 'Grimoire'
+  $('title-label').style.color = showCtx ? '#f07070' : ''
 
+  if (state.project_name !== undefined) {
+    $('project-name-text').textContent = state.project_name || '—'
+  }
   if (state.project_line !== undefined) {
     $('project-text').textContent = state.project_line || '...'
   }
