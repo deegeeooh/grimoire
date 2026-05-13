@@ -4,10 +4,35 @@
   "description": "Companion app for the Grim AI persona",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "build": "electron-builder --win --x64"
+  },
+  "build": {
+    "appId": "com.emergo.grimoire",
+    "productName": "Grimoire",
+    "directories": {
+      "output": "dist"
+    },
+    "win": {
+      "target": "nsis"
+    },
+    "nsis": {
+      "oneClick": true,
+      "perMachine": false
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "renderer/**/*",
+      "bridge/**/*",
+      "agents/**/*",
+      "grimoire.config.json",
+      "state/**/*"
+    ]
   },
   "devDependencies": {
-    "electron": "^42.0.1"
+    "electron": "^42.0.1",
+    "electron-builder": "^25.1.8"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.39.0"

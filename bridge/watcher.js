@@ -15,7 +15,7 @@ function startWatcher(filePath, onChange) {
 
   read()
   // fs.watchFile is polling-based — more reliable than fs.watch on Windows
-  fs.watchFile(filePath, { interval: 500 }, read)
+  fs.watchFile(filePath, { interval: 150 }, read)
 }
 
 module.exports = { startWatcher }

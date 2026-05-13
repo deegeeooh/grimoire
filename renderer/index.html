@@ -13,7 +13,9 @@
     <div id="topbar">
       <span id="ctx-label">ctx: --%</span>
       <div id="indicators">
-        <span id="mem-indicator" class="indicator" title="Memory written">💾</span>
+        <span id="mem-indicator" class="indicator" title="Memory written">◈</span>
+        <button id="pin-btn" class="active" title="Toggle always on top">⊞</button>
+        <button id="focus-btn" title="Bring terminal to front">⌨</button>
         <button id="close-btn" title="Close">×</button>
       </div>
     </div>
@@ -32,9 +34,9 @@
       </svg>
     </div>
 
-    <!-- Emotion + thought -->
-    <div id="emotion-bar"><span id="emotion-label">idle</span></div>
-    <div id="thought-bar"><span id="thought-text">...</span></div>
+    <!-- Project + topic -->
+    <div id="project-bar"><span id="project-text">what stupid thing are we building today</span><span id="completion-pct"></span></div>
+    <div id="topic-bar"><span id="topic-text">—</span></div>
 
     <!-- Bottom bar -->
     <div id="bottombar">

@@ -18,14 +18,14 @@ body {
   background: transparent;
   font-family: system-ui, -apple-system, sans-serif;
   overflow: hidden;
-  width: 180px;
+  width: 200px;
   height: 280px;
 }
 
 /* ── Widget shell ─────────────────────────────────────────── */
 
 #widget {
-  width: 180px;
+  width: 200px;
   height: 280px;
   background: var(--bg);
   border-radius: var(--radius);
@@ -65,6 +65,7 @@ body {
   font-size: 10px;
   color: var(--text-dim);
   font-variant-numeric: tabular-nums;
+  transition: color 0.4s ease;
 }
 
 #indicators {
@@ -77,26 +78,28 @@ body {
 .indicator {
   font-size: 11px;
   opacity: 0.15;
-  transition: opacity 0.4s;
+  transition: opacity 0.4s, color 0.4s;
 }
 
-.indicator.active {
-  opacity: 1;
-}
+.indicator.dirty  { opacity: 1; color: #f0a060; cursor: pointer; }
+.indicator.clean  { opacity: 1; color: #70c878; }
 
-#close-btn {
+#pin-btn, #focus-btn, #close-btn {
   background: none;
   border: none;
   color: var(--text-dim);
   cursor: pointer;
-  font-size: 17px;
+  font-size: 13px;
   line-height: 1;
   padding: 0 2px;
   -webkit-app-region: no-drag;
   transition: color 0.15s;
 }
 
-#close-btn:hover { color: var(--text); }
+#pin-btn.active { color: var(--accent); }
+#close-btn { font-size: 17px; }
+
+#pin-btn:hover, #focus-btn:hover, #close-btn:hover { color: var(--text); }
 
 /* ── Face ─────────────────────────────────────────────────── */
 
@@ -145,35 +148,47 @@ body {
   transition: d 0.45s cubic-bezier(0.34, 1.4, 0.64, 1);
 }
 
-/* ── Emotion / thought ────────────────────────────────────── */
+/* ── Project / topic ──────────────────────────────────────── */
 
-#emotion-bar {
+#project-bar {
   padding: 0 12px 2px;
   flex-shrink: 0;
+  display: flex;
+  align-items: baseline;
+  gap: 0;
 }
 
-#emotion-label {
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  text-transform: lowercase;
+#project-text {
+  font-size: 10px;
+  color: var(--text-dim);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-style: italic;
+  flex: 1;
+  min-width: 0;
+}
+
+#completion-pct {
+  font-size: 10px;
   color: var(--accent);
-  transition: color 0.6s ease;
+  flex-shrink: 0;
+  font-variant-numeric: tabular-nums;
 }
 
-#thought-bar {
+#topic-bar {
   padding: 0 12px 6px;
   flex-shrink: 0;
 }
 
-#thought-text {
+#topic-text {
   font-size: 10px;
   color: var(--text-dim);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   display: block;
-  font-style: italic;
+  opacity: 0.6;
 }
 
 /* ── Bottom bar ───────────────────────────────────────────── */
@@ -181,7 +196,7 @@ body {
 #bottombar {
   display: flex;
   gap: 4px;
-  padding: 4px 8px 8px;
+  padding: 4px 12px 10px;
   flex-shrink: 0;
   -webkit-app-region: no-drag;
 }

@@ -17,6 +17,24 @@ const EMOTIONS = {
   concerned:  { eyeScale: 1.17, browL: 'M25,42 Q40,36 55,34', browR: 'M65,34 Q80,36 95,42', mouth: 'M42,81 Q60,77 78,81', accent: '#f0a060' }
 }
 
+const ACTIVITY_ICONS = {
+  idle:         '○',
+  waiting:      '○',
+  reading_file: '◎',
+  writing:      '◈',
+  thinking:     '◌',
+  planning:     '◌',
+  running_code: '▷',
+  searching:    '⊙',
+  tool_use:     '⊙'
+}
+
+const CTX_COLORS = [
+  [80, '#f07070'],
+  [60, '#f0c060'],
+  [0,  '#555555']
+]
+
 const $ = id => document.getElementById(id)
 const eyeL    = $('eye-l'),   eyeR    = $('eye-r')
 const pupilL  = $('pupil-l'), pupilR  = $('pupil-r')
@@ -38,17 +56,39 @@ function applyEmotion(name) {
   browR.style.d   = `path("${e.browR}")`
   mouthEl.style.d = `path("${e.mouth}")`
 
-  $('emotion-label').textContent = name
-  $('emotion-label').style.color = e.accent
   document.documentElement.style.setProperty('--accent', e.accent)
 }
 
 function applyState(state) {
   if (!state) return
   applyEmotion(state.emotion || 'idle')
-  $('thought-text').textContent = state.thought || '...'
-  $('ctx-label').textContent    = `ctx: ${state.ctx_pct ?? '--'}%`
+
+  const pct = state.ctx_pct ?? null
+  $('ctx-label').textContent = pct !== null ? `ctx: ${pct}%` : ''
+  const ctxColor = (CTX_COLORS.find(([t]) => pct >= t) || CTX_COLORS.at(-1))[1]
+  $('ctx-label').style.color = ctxColor
+
+  if (state.project_line !== undefined) {
+    $('project-text').textContent = state.project_line || '...'
+  }
+  const cpct = state.completion_pct ?? null
+  $('completion-pct').textContent = cpct !== null ? ` · ${cpct}%` : ''
+
+  $('topic-text').textContent = state.topic || '—'
+
+  const memEl = $('mem-indicator')
+  memEl.classList.remove('dirty', 'clean')
+  if (state.mem_state === 'dirty') memEl.classList.add('dirty')
+  else if (state.mem_state === 'clean') memEl.classList.add('clean')
 }
+
+// ── Mem indicator ──────────────────────────────────────────
+
+$('mem-indicator').addEventListener('click', () => {
+  if ($('mem-indicator').classList.contains('dirty')) {
+    window.grimoire.saveMemory()
+  }
+})
 
 // ── Gear panel ─────────────────────────────────────────────
 
@@ -116,6 +156,19 @@ window.grimoire.onAskError(err => { askResp.textContent = `(${err})` })
 // ── State bridge ───────────────────────────────────────────
 
 window.grimoire.onStateUpdate(applyState)
+
+// ── Pin toggle ─────────────────────────────────────────────
+
+let pinned = true
+$('pin-btn').addEventListener('click', () => {
+  pinned = !pinned
+  window.grimoire.setAlwaysOnTop(pinned)
+  $('pin-btn').classList.toggle('active', pinned)
+})
+
+// ── Focus terminal ─────────────────────────────────────────
+
+$('focus-btn').addEventListener('click', () => window.grimoire.focusTerminal())
 
 // ── Close ──────────────────────────────────────────────────
 

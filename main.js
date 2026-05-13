@@ -1,12 +1,18 @@
 const { app, BrowserWindow, ipcMain } = require('electron')
+
+app.disableHardwareAcceleration()
+app.commandLine.appendSwitch('disable-gpu')
+app.commandLine.appendSwitch('disable-gpu-sandbox')
+app.setPath('userData', require('path').join(require('os').homedir(), '.grimoire'))
 const path = require('path')
 const fs = require('fs')
+const psRunner = require('./bridge/ps-runner')
 
 let win
 
 function createWindow() {
   win = new BrowserWindow({
-    width: 180,
+    width: 200,
     height: 280,
     frame: false,
     alwaysOnTop: true,
@@ -25,15 +31,36 @@ function createWindow() {
 
   const { startWatcher } = require('./bridge/watcher')
   const statePath = path.join(__dirname, 'state', 'current.json')
+
+  let lastState = null
   startWatcher(statePath, (state) => {
+    lastState = state
     if (win && !win.isDestroyed()) {
       win.webContents.send('state-update', state)
     }
   })
+
+  // Re-send state once renderer is ready (watcher may have fired before load)
+  win.webContents.on('did-finish-load', () => {
+    if (lastState) win.webContents.send('state-update', lastState)
+  })
+
+  psRunner.ensure()
 }
 
-app.whenReady().then(createWindow)
-app.on('window-all-closed', () => app.quit())
+const gotLock = app.requestSingleInstanceLock()
+if (!gotLock) {
+  app.quit()
+} else {
+  app.on('second-instance', () => {
+    if (win) {
+      if (win.isMinimized()) win.restore()
+      win.focus()
+    }
+  })
+  app.whenReady().then(createWindow)
+  app.on('window-all-closed', () => app.quit())
+}
 
 ipcMain.on('close-window', () => {
   if (win) win.close()
@@ -57,4 +84,17 @@ ipcMain.on('ask', async (_, message) => {
 
 ipcMain.on('set-steer', (_, steer) => {
   console.log('Steer:', steer)
+})
+
+ipcMain.on('save-memory', async () => {
+  // TODO: call agent to persist memory
+  console.log('save-memory triggered')
+})
+
+ipcMain.on('set-always-on-top', (_, pinned) => {
+  if (win) win.setAlwaysOnTop(pinned, 'screen-saver')
+})
+
+ipcMain.on('focus-terminal', () => {
+  psRunner.run('Focus-Terminal')
 })

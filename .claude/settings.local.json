@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm start *)",
+      "Bash(Get-Process -Name electron -ErrorAction SilentlyContinue)",
+      "Bash(Stop-Process -Force)",
+      "PowerShell(Get-Process *)",
+      "Skill(update-config)",
+      "PowerShell(Get-ChildItem \"C:\\\\Users\\\\Pepijn.Bakker\\\\.claude\\\\projects\\\\C--Users-Pepijn-Bakker\\\\\" -Recurse -ErrorAction SilentlyContinue | Where-Object { !$_.PSIsContainer })",
+      "PowerShell(Get-Item *)",
+      "PowerShell(echo '{\"test\":\"hello\",\"session_id\":\"abc\"}' | node \"C:\\\\Users\\\\Pepijn.Bakker\\\\Documents\\\\ClaudeCode\\\\grimoire\\\\hooks\\\\debug-dump.js\"; Start-Sleep -Milliseconds 500; Get-Content \"C:\\\\Users\\\\Pepijn.Bakker\\\\AppData\\\\Local\\\\Temp\\\\grimoire-hook-debug.json\")",
+      "PowerShell(Get-Content *)",
+      "PowerShell(Read-Host *)"
+    ]
+  }
+}

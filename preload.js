@@ -6,6 +6,9 @@ contextBridge.exposeInMainWorld('grimoire', {
   onAskError:    (cb) => ipcRenderer.on('ask-error',    (_, err)      => cb(err)),
   ask:           (msg)   => ipcRenderer.send('ask', msg),
   setSteer:      (steer) => ipcRenderer.send('set-steer', steer),
-  closeWindow:   ()      => ipcRenderer.send('close-window'),
-  getConfig:     ()      => ipcRenderer.invoke('get-config')
+  closeWindow:   ()       => ipcRenderer.send('close-window'),
+  getConfig:     ()       => ipcRenderer.invoke('get-config'),
+  setAlwaysOnTop:(pinned) => ipcRenderer.send('set-always-on-top', pinned),
+  focusTerminal: ()       => ipcRenderer.send('focus-terminal'),
+  saveMemory:    ()       => ipcRenderer.send('save-memory')
 })

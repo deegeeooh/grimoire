@@ -1,0 +1,55 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"C:\\Users\\Pepijn.Bakker\\Documents\\ClaudeCode\\grimoire\\hooks\\state-bridge.js\" pre-tool",
+            "async": true
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"C:\\Users\\Pepijn.Bakker\\Documents\\ClaudeCode\\grimoire\\hooks\\state-bridge.js\" stop",
+            "async": true
+          }
+        ]
+      }
+    ],
+    "PreCompact": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"C:\\Users\\Pepijn.Bakker\\Documents\\ClaudeCode\\grimoire\\hooks\\state-bridge.js\" pre-compact",
+            "async": true
+          }
+        ]
+      }
+    ],
+    "PostCompact": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"C:\\Users\\Pepijn.Bakker\\Documents\\ClaudeCode\\grimoire\\hooks\\state-bridge.js\" post-compact",
+            "async": true
+          }
+        ]
+      }
+    ]
+  },
+  "permissions": {
+    "allow": ["PowerShell"]
+  }
+}
