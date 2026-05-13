@@ -9,7 +9,7 @@ The hooks handle the mechanical layer automatically. Everything that requires ju
 ```json
 {
   "session_id": "string — from hook event",
-  "emotion": "idle|curious|focused|amused|skeptical|satisfied|frustrated|surprised|concerned",
+  "emotion": "idle|curious|focused|amused|satisfied|frustrated",
   "activity": "idle|waiting|reading_file|writing|thinking|planning|running_code|searching|tool_use",
   "project_name": "short name of the project (e.g. 'Grimoire')",
   "project_desc": "one-line description of what it is",
@@ -46,7 +46,6 @@ Update when the mood of the work genuinely shifts — don't update mechanically 
 - `satisfied` after a clean commit or something working
 - `amused` when something is genuinely funny
 - `curious` when exploring unknown territory
-- `concerned` when something looks wrong
 
 ### `project_line` + `completion_pct` + `thought` — update together
 

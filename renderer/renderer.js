@@ -10,11 +10,8 @@ const EMOTIONS = {
   curious:    { eyeScale: 1.5,  browL: 'M25,34 Q40,28 55,34', browR: 'M65,34 Q80,28 95,34', mouth: 'M44,78 Q60,78 76,78', accent: '#7bb8f0' },
   focused:    { eyeScale: 0.58, browL: 'M25,39 Q40,37 55,38', browR: 'M65,38 Q80,37 95,39', mouth: 'M42,79 Q60,79 78,79', accent: '#c8a2f0' },
   amused:     { eyeScale: 1.0,  browL: 'M25,35 Q40,30 55,35', browR: 'M65,35 Q80,30 95,35', mouth: 'M40,76 Q60,92 80,76', accent: '#f0c060' },
-  skeptical:  { eyeScale: 0.83, browL: 'M25,35 Q40,30 55,35', browR: 'M65,39 Q80,37 95,36', mouth: 'M42,77 Q60,82 78,79', accent: '#909090' },
   satisfied:  { eyeScale: 0.58, browL: 'M25,38 Q40,35 55,38', browR: 'M65,38 Q80,35 95,38', mouth: 'M42,76 Q60,88 78,76', accent: '#70c878' },
-  frustrated: { eyeScale: 0.67, browL: 'M25,36 Q40,43 55,45', browR: 'M65,45 Q80,43 95,36', mouth: 'M42,83 Q60,76 78,83', accent: '#f07070' },
-  surprised:  { eyeScale: 1.83, browL: 'M25,31 Q40,25 55,31', browR: 'M65,31 Q80,25 95,31', mouth: 'M48,77 Q60,91 72,77', accent: '#f0d470' },
-  concerned:  { eyeScale: 1.17, browL: 'M25,42 Q40,36 55,34', browR: 'M65,34 Q80,36 95,42', mouth: 'M42,81 Q60,77 78,81', accent: '#f0a060' }
+  frustrated: { eyeScale: 0.67, browL: 'M25,36 Q40,43 55,45', browR: 'M65,45 Q80,43 95,36', mouth: 'M42,83 Q60,76 78,83', accent: '#f07070' }
 }
 
 const ACTIVITY_LABELS = {
