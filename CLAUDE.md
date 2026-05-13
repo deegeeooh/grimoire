@@ -55,6 +55,8 @@ Update all three when:
 - Focus shifts to a meaningfully different area
 - Something notable just happened worth remarking on
 
+**Git commits via Bash**: hooks only fire on Claude Code tool events, not raw shell commands. When running `git commit` via Bash, manually update state immediately after — hooks won't do it for you.
+
 **`project_line`**: sardonic one-liner about where the project stands. Honest, dry, warm undercurrent.
 
 **`completion_pct`**: genuine estimate. Don't flatter.

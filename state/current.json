@@ -1,8 +1,14 @@
 {
-  "session_id": "00000000-0000-0000-0000-000000000000",
-  "emotion": "surprised",
-  "intensity": 0.9,
-  "activity": "reading_file",
-  "thought": "wait what",
-  "ctx_pct": 34
+  "session_id": "e556e478-b3d3-4a54-9200-fa24ed506239",
+  "emotion": "satisfied",
+  "activity": "running_code",
+  "ctx_pct": null,
+  "topic": "focus-terminal fix",
+  "project_name": "Grimoire",
+  "project_line": "raises the terminal even when Windows is being protective about it",
+  "completion_pct": 60,
+  "mem_state": null,
+  "thought": "theory: Pepijn tests one thing at a time and moves on immediately — zero dwelling on wins",
+  "idle_topic": "Pepijn satisfied with focus fix. Onto the next thing, presumably.",
+  "project_desc": "coding companion that thinks out loud"
 }

@@ -10,15 +10,28 @@ using System.Runtime.InteropServices;
 public class Win32 {
   [DllImport("user32.dll")] public static extern bool ShowWindowAsync(IntPtr hWnd, int nCmdShow);
   [DllImport("user32.dll")] public static extern bool SetForegroundWindow(IntPtr hWnd);
+  [DllImport("user32.dll")] public static extern bool IsIconic(IntPtr hWnd);
+  [DllImport("user32.dll")] public static extern bool IsZoomed(IntPtr hWnd);
+  [DllImport("user32.dll")] public static extern void SwitchToThisWindow(IntPtr hWnd, bool fAltTab);
+  [DllImport("user32.dll")] public static extern void keybd_event(byte bVk, byte bScan, uint dwFlags, UIntPtr dwExtraInfo);
 }
 "@
 $script:cachedTermPid = $null
+function Show-Window {
+  param($hwnd)
+  if ([Win32]::IsIconic($hwnd)) { [Win32]::ShowWindowAsync($hwnd, 9) }
+  elseif ([Win32]::IsZoomed($hwnd)) { [Win32]::ShowWindowAsync($hwnd, 3) }
+  else { [Win32]::ShowWindowAsync($hwnd, 5) }
+  [Win32]::keybd_event(0x12, 0, 0x0001, [UIntPtr]::Zero)
+  [Win32]::SwitchToThisWindow($hwnd, $true)
+  [Win32]::SetForegroundWindow($hwnd) | Out-Null
+  [Win32]::keybd_event(0x12, 0, 0x0003, [UIntPtr]::Zero)
+}
 function Focus-Terminal {
   if ($script:cachedTermPid) {
     $cached = Get-Process -Id $script:cachedTermPid -ErrorAction SilentlyContinue
     if ($cached -and $cached.MainWindowHandle -ne [IntPtr]::Zero) {
-      [Win32]::ShowWindowAsync($cached.MainWindowHandle, 9)
-      [Win32]::SetForegroundWindow($cached.MainWindowHandle)
+      Show-Window $cached.MainWindowHandle
       return
     }
     $script:cachedTermPid = $null
@@ -26,8 +39,7 @@ function Focus-Terminal {
   $target = Get-Process -Name 'WindowsTerminal' -ErrorAction SilentlyContinue | Select-Object -First 1
   if ($target) {
     $script:cachedTermPid = $target.Id
-    [Win32]::ShowWindowAsync($target.MainWindowHandle, 9)
-    [Win32]::SetForegroundWindow($target.MainWindowHandle)
+    Show-Window $target.MainWindowHandle
   }
 }
 Write-Host "GRIMOIRE_READY"

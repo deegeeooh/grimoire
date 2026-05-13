@@ -10,7 +10,12 @@
       "PowerShell(Get-Item *)",
       "PowerShell(echo '{\"test\":\"hello\",\"session_id\":\"abc\"}' | node \"C:\\\\Users\\\\Pepijn.Bakker\\\\Documents\\\\ClaudeCode\\\\grimoire\\\\hooks\\\\debug-dump.js\"; Start-Sleep -Milliseconds 500; Get-Content \"C:\\\\Users\\\\Pepijn.Bakker\\\\AppData\\\\Local\\\\Temp\\\\grimoire-hook-debug.json\")",
       "PowerShell(Get-Content *)",
-      "PowerShell(Read-Host *)"
+      "PowerShell(Read-Host *)",
+      "Bash(Get-Process electron *)",
+      "Bash(node *)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)"
     ]
   }
 }
