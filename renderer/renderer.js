@@ -189,14 +189,24 @@ personaSave.addEventListener('click', async () => {
 
 const grimContent = $('grim-content')
 
+const GRIM_SECTIONS = new Set(['Observed', 'Theories', 'Open questions', 'Relationship state'])
+
 function renderGrim(text) {
   grimContent.innerHTML = ''
+  let visible = false
   for (const line of text.split('\n')) {
-    const el = document.createElement('div')
     if (line.startsWith('## ')) {
+      visible = GRIM_SECTIONS.has(line.slice(3))
+      if (!visible) continue
+      const el = document.createElement('div')
       el.className = 'grim-header'
       el.textContent = line.slice(3)
-    } else if (line.startsWith('# ')) {
+      grimContent.appendChild(el)
+      continue
+    }
+    if (!visible) continue
+    const el = document.createElement('div')
+    if (line.startsWith('# ')) {
       el.className = 'grim-title'
       el.textContent = line.slice(2)
     } else if (line.startsWith('- **')) {
