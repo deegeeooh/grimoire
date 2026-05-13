@@ -18,10 +18,15 @@ function isNewSession(sessionId) {
 
 function isGrimoireRunning() {
   try {
-    return execSync('tasklist /FI "IMAGENAME eq electron.exe" /NH', {
+    const checkScript = path.join(os.tmpdir(), 'grim-check.ps1');
+    fs.writeFileSync(checkScript,
+      `$p = Get-Process electron -ErrorAction SilentlyContinue | Where-Object {$_.Path -like '*grimoire*'}; Write-Output ([bool]$p)`
+    );
+    const result = execSync(`powershell -NoProfile -File "${checkScript}"`, {
       encoding: 'utf8',
       stdio: ['pipe', 'pipe', 'ignore']
-    }).includes('electron.exe');
+    });
+    return result.trim() === 'True';
   } catch {
     return false;
   }
