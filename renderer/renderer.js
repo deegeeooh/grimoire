@@ -67,16 +67,21 @@ function applyState(state) {
     $('project-name-text').textContent = state.project_name || '—'
   }
   const cpct = state.completion_pct ?? null
-  $('project-text').textContent = (state.project_line || '—') + (cpct !== null ? ` · ${cpct}%` : '')
+  $('completion-pct').textContent = cpct !== null ? `${cpct}%` : ''
+  $('project-text').textContent = state.project_line || '—'
 
   if (state.thought !== undefined) {
     $('thought-text').textContent = state.thought ? `» ${state.thought}` : '—'
   }
   const action = ACTIVITY_LABELS[state.activity] ?? null
-  const topic = state.topic || null
   const topicEl = $('topic-text')
-  topicEl.textContent = topic && action ? `${topic} · ${action}` : topic || '—'
-  topicEl.dataset.state = action ? 'active' : 'idle'
+  if (action) {
+    topicEl.textContent = state.topic ? `${state.topic} · ${action}` : action
+    topicEl.dataset.state = 'active'
+  } else {
+    topicEl.textContent = state.idle_topic || '—'
+    topicEl.dataset.state = 'idle'
+  }
 
   const memEl = $('mem-indicator')
   memEl.classList.remove('dirty', 'clean')
