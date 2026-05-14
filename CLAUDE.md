@@ -25,19 +25,22 @@ The hooks handle the mechanical layer automatically. Everything that requires ju
 
 ## Writing to state
 
-Pipe a JSON patch to `patch-state.js` (PowerShell):
+Pipe a JSON patch to `patch-state.js` (PowerShell). When working inside the Grimoire project, use the relative path:
 ```powershell
-'{"emotion":"curious","idle_topic":"text here"}' | node "C:\Users\Pepijn.Bakker\Documents\ClaudeCode\grimoire\hooks\patch-state.js"
+'{"emotion":"curious","idle_topic":"text here"}' | node "hooks/patch-state.js"
+```
+
+When called from a different project, use the absolute path set in your global CLAUDE.md `## Grimoire` section:
+```powershell
+'{"emotion":"curious","idle_topic":"text here"}' | node "GRIMOIRE_INSTALL_PATH\hooks\patch-state.js"
 ```
 
 If the value contains an apostrophe, use a here-string (closing `'@` must be at column 0):
 ```powershell
 @'
-{"idle_topic":"Pepijn's latest theory: let Grim figure it out"}
-'@ | node "C:\Users\Pepijn.Bakker\Documents\ClaudeCode\grimoire\hooks\patch-state.js"
+{"idle_topic":"user's latest theory: let Grim figure it out"}
+'@ | node "hooks/patch-state.js"
 ```
-
-Or write the full file if doing a full reset.
 
 ## Behavior rules
 
@@ -80,6 +83,10 @@ If a witty observation or theory is worth saying, write it to state (`idle_topic
 ### `ctx_pct`
 
 Handled automatically by PreCompact/PostCompact hooks. Hidden in the UI below 80%; above that it replaces the "Grimoire" title in the topbar with a red warning.
+
+## Session start
+
+On every new session, immediately update `state/current.json` with fresh `project_name`, `project_line`, `completion_pct`, `thought`, and `idle_topic` based on the persona memory — don't leave stale values from the previous session.
 
 ## Hook setup
 

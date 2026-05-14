@@ -17,7 +17,11 @@
       "Bash(git commit -m ' *)",
       "Bash(git push *)",
       "Bash(start *)",
-      "Bash(node_modules/.bin/electron .)"
+      "Bash(node_modules/.bin/electron .)",
+      "Bash(gh api *)",
+      "Bash(python -c \"import sys, base64; print\\(base64.b64decode\\(sys.stdin.read\\(\\)\\).decode\\('utf-8'\\)\\)\")",
+      "Bash(curl -s https://raw.githubusercontent.com/deegeeooh/grimoire/main/PROJECT.html)",
+      "WebFetch(domain:raw.githubusercontent.com)"
     ]
   }
 }
