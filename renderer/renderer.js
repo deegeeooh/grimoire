@@ -349,8 +349,7 @@ $('thought-bar').addEventListener('mouseenter', () => {
   if (!thoughtTooltip.textContent) return
   const bar = $('thought-bar').getBoundingClientRect()
   const widget = document.getElementById('widget').getBoundingClientRect()
-  const top = bar.top - widget.top - thoughtTooltip.offsetHeight - 6
-  thoughtTooltip.style.top = Math.max(4, top) + 'px'
+  thoughtTooltip.style.bottom = (widget.bottom - bar.top + 4) + 'px'
   thoughtTooltip.style.display = 'block'
 })
 $('thought-bar').addEventListener('mouseleave', () => {

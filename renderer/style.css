@@ -247,6 +247,7 @@ body {
   position: absolute;
   left: 8px;
   right: 8px;
+  bottom: 60px;
   background: #1a2428;
   border: 1px solid rgba(255,255,255,0.1);
   border-radius: 4px;
