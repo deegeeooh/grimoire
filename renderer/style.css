@@ -228,6 +228,7 @@ body {
 #thought-bar {
   padding: 6px 12px 4px;
   flex-shrink: 0;
+  -webkit-app-region: no-drag;
 }
 
 #thought-text {
