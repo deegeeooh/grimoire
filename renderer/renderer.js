@@ -120,7 +120,7 @@ function applyState(state) {
 
   if (state.thought !== undefined) {
     $('thought-text').textContent = state.thought ? `» ${state.thought}` : '—'
-    $('thought-bar').dataset.tooltip = state.thought || ''
+    $('thought-tooltip').textContent = state.thought || ''
   }
   const action = ACTIVITY_LABELS[state.activity] ?? null
   const topicEl = $('topic-text')
@@ -341,6 +341,21 @@ $('focus-btn').addEventListener('click', () => window.grimoire.focusTerminal())
 // ── Close ──────────────────────────────────────────────────
 
 $('close-btn').addEventListener('click', () => window.grimoire.closeWindow())
+
+// ── Thought tooltip ────────────────────────────────────────
+
+const thoughtTooltip = $('thought-tooltip')
+$('thought-bar').addEventListener('mouseenter', () => {
+  if (!thoughtTooltip.textContent) return
+  const bar = $('thought-bar').getBoundingClientRect()
+  const widget = document.getElementById('widget').getBoundingClientRect()
+  const top = bar.top - widget.top - thoughtTooltip.offsetHeight - 6
+  thoughtTooltip.style.top = Math.max(4, top) + 'px'
+  thoughtTooltip.style.display = 'block'
+})
+$('thought-bar').addEventListener('mouseleave', () => {
+  thoughtTooltip.style.display = 'none'
+})
 
 // ── Init ───────────────────────────────────────────────────
 
