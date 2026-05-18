@@ -76,11 +76,24 @@ function applyState(state) {
   const action = ACTIVITY_LABELS[state.activity] ?? null
   const topicEl = $('topic-text')
   if (action) {
+    topicEl.classList.remove('scrolling')
     topicEl.textContent = state.topic ? `${state.topic} · ${action}` : action
     topicEl.dataset.state = 'active'
   } else {
-    topicEl.textContent = state.idle_topic || '—'
+    const idleText = state.idle_topic || '—'
+    topicEl.classList.remove('scrolling')
+    topicEl.textContent = idleText
     topicEl.dataset.state = 'idle'
+    requestAnimationFrame(() => {
+      if (topicEl.scrollWidth <= topicEl.offsetWidth) return
+      topicEl.textContent = idleText + '   ·   ' + idleText
+      requestAnimationFrame(() => {
+        const dist = topicEl.scrollWidth / 2
+        topicEl.style.setProperty('--ticker-dist', `-${dist}px`)
+        topicEl.style.setProperty('--ticker-duration', `${Math.max(5, dist / 40)}s`)
+        topicEl.classList.add('scrolling')
+      })
+    })
   }
 
   const memEl = $('mem-indicator')

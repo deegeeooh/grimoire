@@ -230,6 +230,11 @@ body {
   flex-shrink: 0;
   border-top: 1px solid rgba(255,255,255,0.05);
   margin-top: 4px;
+  overflow: hidden;
+}
+
+#topic-bar:has(.scrolling) {
+  -webkit-mask-image: linear-gradient(to right, transparent 0, black 10px, black calc(100% - 10px), transparent 100%);
 }
 
 #topic-text {
@@ -238,10 +243,14 @@ body {
   font-family: ui-monospace, monospace;
   letter-spacing: 0.03em;
   line-height: 1.45;
+}
+
+#topic-text[data-state="active"] {
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  white-space: normal;
 }
 
 #topic-text[data-state="active"]::after {
@@ -250,10 +259,24 @@ body {
   color: #909090;
 }
 
-#topic-text[data-state="idle"]::after {
-  content: ' ···';
-  animation: blink-dots 2s step-end infinite;
-  color: #808080;
+#topic-text[data-state="idle"] {
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+#topic-text[data-state="idle"].scrolling {
+  overflow: visible;
+  animation: ticker var(--ticker-duration, 10s) linear infinite;
+}
+
+#topic-text[data-state="idle"].scrolling:hover {
+  animation-play-state: paused;
+}
+
+@keyframes ticker {
+  from { transform: translateX(0); }
+  to   { transform: translateX(var(--ticker-dist, 0px)); }
 }
 
 @keyframes pulse-dot {
