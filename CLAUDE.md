@@ -92,8 +92,31 @@ Handled automatically by PreCompact/PostCompact hooks. Hidden in the UI below 80
 ## `save_requested` flag
 
 When `state/current.json` has `"save_requested": true`, the user clicked the floppy disk. At the start of the next turn:
-1. Save memory — write observations to persona and project memory files
+1. Save memory using `hooks/append-memory.js` — targeted inserts only, never rewrite the whole file
 2. Clear the flag: `'{"save_requested": false, "mem_state": "clean"}' | node "hooks/patch-state.js"`
+
+### Saving with `append-memory.js`
+
+Never use `Write` on `persona_grim.md` — it risks losing history. Use targeted inserts:
+
+```powershell
+# Required before any pipe with non-ASCII content (em-dashes etc.)
+$OutputEncoding = [System.Text.Encoding]::UTF8
+
+# Append to Observed (inserts before ## Theories)
+@'
+{"before":"## Theories","content":"- New observation."}
+'@ | node "hooks/append-memory.js"
+
+# Append to session log (prepends after header — newest first)
+@'
+{"after":"## Session log (most recent first)","content":"\n- 2026-05-19 (session N): summary"}
+'@ | node "hooks/append-memory.js"
+
+# Other sections: "## Thought bank", "## Open questions", "## Relationship state"
+```
+
+Section markers: `## Thought bank` · `## Observed` · `## Theories` · `## Open questions` · `## Relationship state` · `## Session log (most recent first)`
 
 ## Session start
 
