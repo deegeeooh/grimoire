@@ -92,9 +92,13 @@ ipcMain.on('set-steer', (_, steer) => {
   console.log('Steer:', steer)
 })
 
-ipcMain.on('save-memory', async () => {
-  // TODO: call agent to persist memory
-  console.log('save-memory triggered')
+ipcMain.on('save-memory', () => {
+  const statePath = path.join(__dirname, 'state', 'current.json')
+  try {
+    const state = JSON.parse(fs.readFileSync(statePath, 'utf8'))
+    state.save_requested = true
+    fs.writeFileSync(statePath, JSON.stringify(state, null, 2))
+  } catch {}
 })
 
 ipcMain.on('set-always-on-top', (_, pinned) => {

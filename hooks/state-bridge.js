@@ -40,7 +40,9 @@ process.stdin.on('end', () => {
       const tool = event.tool_name || ''
       const input = event.tool_input || {}
       const activity = TOOL_ACTIVITY[tool] || 'tool_use'
-      patch({ session_id: event.session_id, activity })
+      const current = readState()
+      const memPatch = current.mem_state === 'clean' ? { mem_state: null } : {}
+      patch({ session_id: event.session_id, activity, ...memPatch })
 
     } else if (hookType === 'stop') {
       patch({ session_id: event.session_id, activity: 'waiting' })

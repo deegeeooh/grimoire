@@ -13,7 +13,14 @@
     <div id="topbar">
       <span id="title-label">Grimoire</span>
       <div id="indicators">
-        <span id="mem-indicator" class="indicator" title="Memory written">◈</span>
+        <span id="mem-indicator" class="indicator" title="Save memory">
+          <svg width="11" height="11" viewBox="0 0 12 12" fill="currentColor">
+            <rect x="1" y="1" width="10" height="10" rx="1.5"/>
+            <rect x="3" y="1" width="5" height="4.5" fill="var(--bg)"/>
+            <rect x="6.5" y="1.5" width="1.5" height="3" fill="currentColor"/>
+            <rect x="4" y="7.5" width="4" height="2.5" rx="0.5" fill="var(--bg)"/>
+          </svg>
+        </span>
         <button id="pin-btn" class="active" title="Toggle always on top">⊞</button>
         <button id="focus-btn" title="Bring terminal to front">⌨</button>
         <button id="close-btn" title="Close">×</button>

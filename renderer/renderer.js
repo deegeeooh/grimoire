@@ -151,14 +151,15 @@ function applyState(state) {
 
   const memEl = $('mem-indicator')
   memEl.classList.remove('dirty', 'clean')
-  if (state.mem_state === 'dirty') memEl.classList.add('dirty')
-  else if (state.mem_state === 'clean') memEl.classList.add('clean')
+  if (state.mem_state === 'dirty') { memEl.classList.add('dirty'); memEl.title = 'Save memory' }
+  else if (state.mem_state === 'clean') { memEl.classList.add('clean'); memEl.title = 'Memory saved' }
+  else { memEl.title = 'Save memory' }
 }
 
 // ── Mem indicator ──────────────────────────────────────────
 
 $('mem-indicator').addEventListener('click', () => {
-  if ($('mem-indicator').classList.contains('dirty')) {
+  if (!$('mem-indicator').classList.contains('clean')) {
     window.grimoire.saveMemory()
   }
 })

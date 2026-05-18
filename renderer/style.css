@@ -80,13 +80,16 @@ body {
 }
 
 .indicator {
-  font-size: 11px;
-  opacity: 0.35;
-  transition: opacity 0.4s, color 0.4s;
+  opacity: 1;
+  color: #f0a060;
+  cursor: pointer;
+  transition: color 0.4s;
+  display: flex;
+  align-items: center;
 }
 
-.indicator.dirty  { opacity: 1; color: #f0a060; cursor: pointer; }
-.indicator.clean  { opacity: 1; color: #70c878; }
+.indicator.dirty  { color: #f0a060; }
+.indicator.clean  { color: #70c878; cursor: default; }
 
 #pin-btn, #focus-btn, #close-btn {
   background: none;

@@ -58,7 +58,7 @@ process.stdin.on('end', () => {
 
   if (isNewSession(sessionId)) {
     fs.writeFileSync(STAMP_FILE, sessionId);
-    patchState({ activity: 'waiting', emotion: 'idle' });
+    patchState({ activity: 'waiting', emotion: 'idle', mem_state: null });
   }
 
   process.exit(0);
