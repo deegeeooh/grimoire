@@ -150,8 +150,9 @@ function applyState(state) {
   }
 
   const memEl = $('mem-indicator')
-  memEl.classList.remove('dirty', 'clean')
-  if (state.mem_state === 'dirty') { memEl.classList.add('dirty'); memEl.title = 'Save memory' }
+  memEl.classList.remove('dirty', 'pending', 'clean')
+  if (state.save_requested) { memEl.classList.add('pending'); memEl.title = 'Saving next turn...' }
+  else if (state.mem_state === 'dirty') { memEl.classList.add('dirty'); memEl.title = 'Save memory' }
   else if (state.mem_state === 'clean') { memEl.classList.add('clean'); memEl.title = 'Memory saved' }
   else { memEl.title = 'Save memory' }
 }

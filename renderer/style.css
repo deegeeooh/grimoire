@@ -88,8 +88,9 @@ body {
   align-items: center;
 }
 
-.indicator.dirty  { color: #f0a060; }
-.indicator.clean  { color: #70c878; cursor: default; }
+.indicator.dirty   { color: #f0a060; }
+.indicator.pending { color: #e8d040; cursor: default; }
+.indicator.clean   { color: #70c878; cursor: default; }
 
 #pin-btn, #focus-btn, #close-btn {
   background: none;
