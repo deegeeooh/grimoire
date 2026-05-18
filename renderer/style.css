@@ -228,6 +228,7 @@ body {
 #thought-bar {
   padding: 6px 12px 4px;
   flex-shrink: 0;
+  position: relative;
 }
 
 #thought-text {
@@ -239,6 +240,26 @@ body {
   -webkit-box-orient: vertical;
   overflow: hidden;
   letter-spacing: 0.01em;
+  cursor: default;
+}
+
+#thought-bar:hover::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: calc(100% + 4px);
+  left: 8px;
+  right: 8px;
+  background: #1a2428;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 4px;
+  padding: 6px 8px;
+  font-size: 9px;
+  color: #9a8672;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-break: break-word;
+  z-index: 100;
+  pointer-events: none;
 }
 
 #topic-bar {

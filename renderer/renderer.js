@@ -119,9 +119,8 @@ function applyState(state) {
   $('project-text').textContent = state.project_line || '—'
 
   if (state.thought !== undefined) {
-    const el = $('thought-text')
-    el.textContent = state.thought ? `» ${state.thought}` : '—'
-    el.title = state.thought || ''
+    $('thought-text').textContent = state.thought ? `» ${state.thought}` : '—'
+    $('thought-bar').dataset.tooltip = state.thought || ''
   }
   const action = ACTIVITY_LABELS[state.activity] ?? null
   const topicEl = $('topic-text')
