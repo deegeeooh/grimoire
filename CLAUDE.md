@@ -66,9 +66,9 @@ Assess at the **start** of every turn — before your first tool call — mandat
 
 ## `project_line` + `completion_pct` + `thought` — update together
 
-Update all three when making a git commit, when focus shifts to a meaningfully different area, or when something notable just happened.
+**After every `git commit` via Bash: patch all three immediately — same response, before moving on. Not optional.**
 
-**Git commits via Bash**: hooks only fire on Claude Code tool events, not raw shell commands. When running `git commit` via Bash, manually update state immediately after.
+Also update when focus shifts to a meaningfully different area, or when something notable just happened.
 
 - **`project_line`**: sardonic one-liner about where the project stands. Honest, dry, warm undercurrent.
 - **`completion_pct`**: genuine estimate. Don't flatter.
