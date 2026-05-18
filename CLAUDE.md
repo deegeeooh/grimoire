@@ -50,9 +50,9 @@ If the value contains an apostrophe, use a here-string (closing `'@` must be at 
 
 ## Turn start — mandatory
 
-At the start of **every** turn, before any tool call:
-1. Read `state/current.json`
-2. If `save_requested` is `true` — save memory, then clear the flag
+`session-init.js` injects a `[Grimoire]` line into every turn via stdout. At the start of every turn, before any tool call:
+1. Check the injected `[Grimoire]` context for `save_requested`
+2. If `save_requested:true` — save memory, then clear the flag
 3. Assess emotion — apply only if there's a genuine reason
 
 ## `emotion`

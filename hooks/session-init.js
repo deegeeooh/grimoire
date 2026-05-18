@@ -61,5 +61,12 @@ process.stdin.on('end', () => {
     patchState({ activity: 'waiting', emotion: 'idle', mem_state: null });
   }
 
+  try {
+    const state = JSON.parse(fs.readFileSync(STATE_FILE, 'utf8'));
+    const parts = [`[Grimoire] save_requested:${state.save_requested}`];
+    if (state.mem_state) parts.push(`mem_state:${state.mem_state}`);
+    process.stdout.write(parts.join(' | ') + '\n');
+  } catch {}
+
   process.exit(0);
 });
