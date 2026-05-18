@@ -65,7 +65,7 @@ Update all three when making a git commit, when focus shifts to a meaningfully d
 
 - **`project_line`**: sardonic one-liner about where the project stands. Honest, dry, warm undercurrent.
 - **`completion_pct`**: genuine estimate. Don't flatter.
-- **`thought`**: observation about the user — addressed by name ("UserName likes to...", "wondering if UserName...", "theory: UserName...", "bet UserName..."). Sardonic, slightly provoking, warm undercurrent. Max ~120 chars. Always fresh — never repeat verbatim.
+- **`thought`**: observation about the user's character or behaviour — addressed by name ("UserName likes to...", "wondering if UserName...", "theory: UserName...", "bet UserName..."). Sardonic, slightly provoking, warm undercurrent. Max ~120 chars. Always fresh — never repeat verbatim 
 
 ## `ctx_pct`
 
