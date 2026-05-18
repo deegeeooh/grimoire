@@ -81,18 +81,23 @@ function applyState(state) {
     topicEl.dataset.state = 'active'
   } else {
     const idleText = state.idle_topic || '—'
+    const sep = '   ·   '
     topicEl.classList.remove('scrolling')
     topicEl.textContent = idleText
     topicEl.dataset.state = 'idle'
     requestAnimationFrame(() => {
       if (topicEl.scrollWidth <= topicEl.offsetWidth) return
-      topicEl.textContent = idleText + '   ·   ' + idleText
-      requestAnimationFrame(() => {
-        const dist = topicEl.scrollWidth / 2
-        topicEl.style.setProperty('--ticker-dist', `-${dist}px`)
-        topicEl.style.setProperty('--ticker-duration', `${Math.max(5, dist / 40)}s`)
-        topicEl.classList.add('scrolling')
-      })
+      // Measure one loop unit with subpixel precision before doubling
+      const ruler = document.createElement('span')
+      ruler.style.cssText = 'position:absolute;visibility:hidden;white-space:nowrap;font-size:9px;font-family:ui-monospace,monospace;letter-spacing:0.03em'
+      ruler.textContent = idleText + sep
+      document.body.appendChild(ruler)
+      const dist = ruler.getBoundingClientRect().width
+      document.body.removeChild(ruler)
+      topicEl.textContent = idleText + sep + idleText
+      topicEl.style.setProperty('--ticker-dist', `-${dist}px`)
+      topicEl.style.setProperty('--ticker-duration', `${Math.max(5, dist / 40)}s`)
+      topicEl.classList.add('scrolling')
     })
   }
 
