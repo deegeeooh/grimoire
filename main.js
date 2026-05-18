@@ -19,7 +19,7 @@ let win
 function createWindow() {
   win = new BrowserWindow({
     width: 200,
-    height: 370,
+    height: 400,
     frame: false,
     alwaysOnTop: true,
     transparent: true,
