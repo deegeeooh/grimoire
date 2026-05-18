@@ -119,8 +119,12 @@ function applyState(state) {
   $('project-text').textContent = state.project_line || '—'
 
   if (state.thought !== undefined) {
-    $('thought-text').textContent = state.thought ? `» ${state.thought}` : '—'
+    const thoughtEl = $('thought-text')
+    thoughtEl.textContent = state.thought ? `» ${state.thought}` : '—'
     $('thought-tooltip').textContent = state.thought || ''
+    const overflows = thoughtEl.scrollHeight > thoughtEl.clientHeight
+    thoughtEl.style.cursor = overflows ? 'help' : 'default'
+    $('thought-bar').dataset.overflows = overflows
   }
   const action = ACTIVITY_LABELS[state.activity] ?? null
   const topicEl = $('topic-text')
@@ -346,7 +350,7 @@ $('close-btn').addEventListener('click', () => window.grimoire.closeWindow())
 
 const thoughtTooltip = $('thought-tooltip')
 $('thought-bar').addEventListener('mouseenter', () => {
-  if (!thoughtTooltip.textContent) return
+  if ($('thought-bar').dataset.overflows !== 'true') return
   const bar = $('thought-bar').getBoundingClientRect()
   const widget = document.getElementById('widget').getBoundingClientRect()
   thoughtTooltip.style.bottom = (widget.bottom - bar.top + 4) + 'px'
