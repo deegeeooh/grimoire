@@ -152,6 +152,10 @@ function applyState(state) {
     })
   }
 
+  if ('completion_breakdown' in state) {
+    renderBreakdown(state.completion_breakdown, state.completion_pct)
+  }
+
   const memEl = $('mem-indicator')
   memEl.classList.remove('dirty', 'pending', 'clean')
   if (state.save_requested) { memEl.classList.add('pending'); memEl.title = 'Saving next turn...' }
@@ -356,6 +360,73 @@ $('thought-bar').addEventListener('mouseenter', () => {
 })
 $('thought-bar').addEventListener('mouseleave', () => {
   thoughtTooltip.style.display = 'none'
+})
+
+// ── Breakdown panel ────────────────────────────────────────
+
+const breakdownPanel = $('breakdown-panel')
+let breakdownOpen = false
+
+function renderBreakdown(items, overallPct) {
+  const list = $('breakdown-list')
+  list.innerHTML = ''
+
+  if (!items || items.length === 0) {
+    const empty = document.createElement('div')
+    empty.className = 'breakdown-empty'
+    empty.textContent = 'no breakdown yet'
+    list.appendChild(empty)
+  } else {
+    items.forEach(({ label, pct }) => {
+      const item = document.createElement('div')
+      item.className = 'breakdown-item'
+
+      const header = document.createElement('div')
+      header.className = 'breakdown-item-header'
+
+      const labelEl = document.createElement('span')
+      labelEl.className = 'breakdown-item-label'
+      labelEl.textContent = label
+
+      const pctEl = document.createElement('span')
+      pctEl.className = 'breakdown-item-pct'
+      pctEl.textContent = `${pct}%`
+
+      header.appendChild(labelEl)
+      header.appendChild(pctEl)
+
+      const track = document.createElement('div')
+      track.className = 'breakdown-bar-track'
+      const fill = document.createElement('div')
+      fill.className = 'breakdown-bar-fill'
+      fill.style.width = `${Math.max(0, Math.min(100, pct))}%`
+      track.appendChild(fill)
+
+      item.appendChild(header)
+      item.appendChild(track)
+      list.appendChild(item)
+    })
+  }
+
+  $('breakdown-overall-pct').textContent = overallPct != null ? `${overallPct}%` : '—'
+}
+
+function closeBreakdown() {
+  breakdownOpen = false
+  breakdownPanel.classList.remove('visible')
+  $('completion-pct').classList.remove('active')
+  setTimeout(() => window.grimoire.toggleBreakdown(false), 220)
+}
+
+$('completion-pct').addEventListener('click', () => {
+  breakdownOpen = !breakdownOpen
+  if (breakdownOpen) {
+    breakdownPanel.classList.add('visible')
+    $('completion-pct').classList.add('active')
+    window.grimoire.toggleBreakdown(true)
+  } else {
+    closeBreakdown()
+  }
 })
 
 // ── Init ───────────────────────────────────────────────────

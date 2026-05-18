@@ -120,3 +120,9 @@ ipcMain.handle('write-file', (_, key, content) => {
   if (!filePath) throw new Error(`Unknown file key: ${key}`)
   fs.writeFileSync(filePath, content, 'utf8')
 })
+
+ipcMain.on('toggle-breakdown', (_, open) => {
+  if (!win) return
+  const b = win.getBounds()
+  win.setBounds({ x: b.x, y: b.y, width: open ? 390 : 200, height: 400 })
+})
