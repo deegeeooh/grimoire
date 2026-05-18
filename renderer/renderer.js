@@ -1,17 +1,61 @@
-// Base eye ry = 6. All eye animation uses scaleY relative to this.
-const BASE_EYE_RY = 6
+// Eye path structure: M lx,cy  A rx,ryBot 0 0 1 rx,cy  A rx,ryLid 0 0 1 lx,cy  Z
+// ryBot = bottom arc depth. ryLid = top lid arc depth (smaller = heavier lid = more sardonic).
+// Brow path: M ox,oy  Q cx,cy  ix,iy
+// Mouth path: M lx,ly  Q cx,cy  rx,ry   (control cy > endpoints = smile; < = frown)
+// Eye path: M lx,cy  A rx,ryBot 0 0 1 rx,cy  A rx,ryLid 0 0 1 lx,cy  Z
+// ryBot = bottom arc depth. ryLid = top lid (smaller = heavier lid). 0.5 = effectively closed.
+// Glasses path: two ellipse frames + bridge, shown only for focused.
+const GLASSES = 'M28,52 A12,7 0 1 0 52,52 A12,7 0 1 0 28,52 M52,52 L68,52 M68,52 A12,7 0 1 0 92,52 A12,7 0 1 0 68,52'
 
-// Brow path structure: M {ox},{oy} Q {cx},{cy} {ix},{iy}
-// Mouth path structure: M {lx},{ly} Q {cx},{cy} {rx},{ry}
-// Smile = control point cy > endpoint y (bulges down = ∪)
-// Frown = control point cy < endpoint y (bulges up = ∩)
 const EMOTIONS = {
-  idle:       { eyeScale: 1.0,  browL: 'M25,38 Q40,33 55,38', browR: 'M65,38 Q80,33 95,38', mouth: 'M42,78 Q60,80 78,78', accent: '#555555' },
-  curious:    { eyeScale: 1.5,  browL: 'M25,34 Q40,28 55,34', browR: 'M65,34 Q80,28 95,34', mouth: 'M44,78 Q60,78 76,78', accent: '#7bb8f0' },
-  focused:    { eyeScale: 0.58, browL: 'M25,39 Q40,37 55,38', browR: 'M65,38 Q80,37 95,39', mouth: 'M42,79 Q60,79 78,79', accent: '#c8a2f0' },
-  amused:     { eyeScale: 1.0,  browL: 'M25,35 Q40,30 55,35', browR: 'M65,35 Q80,30 95,35', mouth: 'M40,76 Q60,92 80,76', accent: '#f0c060' },
-  satisfied:  { eyeScale: 0.58, browL: 'M25,38 Q40,35 55,38', browR: 'M65,38 Q80,35 95,38', mouth: 'M42,76 Q60,88 78,76', accent: '#70c878' },
-  frustrated: { eyeScale: 0.67, browL: 'M25,36 Q40,43 55,45', browR: 'M65,45 Q80,43 95,36', mouth: 'M42,83 Q60,76 78,83', accent: '#f07070' }
+  idle: {
+    eyeL: 'M29,52 A11,6 0 0 1 51,52 A11,3 0 0 1 29,52 Z',
+    eyeR: 'M69,52 A11,6 0 0 1 91,52 A11,3 0 0 1 69,52 Z',
+    eyeFill: '#e8e8e8', glow: 'rgba(80,80,80,0.2)',    pupilScale: 0.55, glasses: 0,
+    browL: 'M25,36 Q40,31 55,38',  browR: 'M65,38 Q80,34 95,38',
+    mouth: 'M42,80 Q58,80 76,75',
+    accent: '#555555'
+  },
+  curious: {
+    eyeL: 'M29,52 A11,8 0 0 1 51,52 A11,8 0 0 1 29,52 Z',
+    eyeR: 'M69,52 A11,8 0 0 1 91,52 A11,8 0 0 1 69,52 Z',
+    eyeFill: '#dde8f5', glow: 'rgba(123,184,240,0.35)', pupilScale: 1.25, glasses: 0,
+    browL: 'M25,32 Q40,26 55,32',  browR: 'M65,32 Q80,26 95,32',
+    mouth: 'M44,78 Q60,78 76,78',
+    accent: '#7bb8f0'
+  },
+  focused: {
+    eyeL: 'M29,52 A11,6 0 0 1 51,52 A11,2 0 0 1 29,52 Z',
+    eyeR: 'M69,52 A11,6 0 0 1 91,52 A11,2 0 0 1 69,52 Z',
+    eyeFill: '#e5e0f0', glow: 'rgba(200,162,240,0.3)',  pupilScale: 0.35, glasses: 1,
+    browL: 'M25,40 Q40,38 55,39',  browR: 'M65,39 Q80,38 95,40',
+    mouth: 'M42,80 Q60,80 78,80',
+    accent: '#c8a2f0'
+  },
+  amused: {
+    eyeL: 'M29,52 A11,6 0 0 1 51,52 A11,4 0 0 1 29,52 Z',
+    eyeR: 'M69,52 A11,6 0 0 1 91,52 A11,4 0 0 1 69,52 Z',
+    eyeFill: '#f5f0d8', glow: 'rgba(240,192,96,0.35)',  pupilScale: 1.0,  glasses: 0,
+    browL: 'M25,33 Q40,27 55,33',  browR: 'M65,33 Q80,27 95,33',
+    mouth: 'M38,75 Q60,95 82,75',
+    accent: '#f0c060'
+  },
+  satisfied: {
+    eyeL: 'M29,52 A11,0.5 0 0 1 51,52 A11,0.5 0 0 1 29,52 Z',
+    eyeR: 'M69,52 A11,0.5 0 0 1 91,52 A11,0.5 0 0 1 69,52 Z',
+    eyeFill: '#d8f0e0', glow: 'rgba(112,200,120,0.3)',  pupilScale: 0.01, glasses: 0,
+    browL: 'M25,39 Q40,36 55,39',  browR: 'M65,39 Q80,36 95,39',
+    mouth: 'M40,77 Q60,90 80,77',
+    accent: '#70c878'
+  },
+  frustrated: {
+    eyeL: 'M29,53 A11,5 0 0 1 51,53 A11,2 0 0 1 29,53 Z',
+    eyeR: 'M69,53 A11,5 0 0 1 91,53 A11,2 0 0 1 69,53 Z',
+    eyeFill: '#f0dada', glow: 'rgba(240,112,112,0.4)',  pupilScale: 0.4,  glasses: 0,
+    browL: 'M25,39 Q40,43 55,42',  browR: 'M65,42 Q80,43 95,39',
+    mouth: 'M40,80 Q60,78 80,80',
+    accent: '#f07070'
+  }
 }
 
 const ACTIVITY_LABELS = {
@@ -31,19 +75,23 @@ const $ = id => document.getElementById(id)
 const eyeL    = $('eye-l'),   eyeR    = $('eye-r')
 const pupilL  = $('pupil-l'), pupilR  = $('pupil-r')
 const browL   = $('brow-l'),  browR   = $('brow-r')
+const glassesEl = $('glasses')
 const mouthEl = $('mouth')
 
 function applyEmotion(name) {
   const e = EMOTIONS[name] || EMOTIONS.idle
 
-  // Eye scale — uses CSS transform so transitions fire
-  const s = e.eyeScale
-  eyeL.style.transform   = `scaleY(${s})`
-  eyeR.style.transform   = `scaleY(${s})`
-  pupilL.style.transform = `scaleY(${s})`
-  pupilR.style.transform = `scaleY(${s})`
+  eyeL.style.d = `path("${e.eyeL}")`
+  eyeR.style.d = `path("${e.eyeR}")`
+  document.documentElement.style.setProperty('--eye-fill', e.eyeFill)
+  document.documentElement.style.setProperty('--glow', e.glow)
 
-  // Path morphing via CSS d property (Chromium supports this)
+  pupilL.style.transform = `scaleY(${e.pupilScale})`
+  pupilR.style.transform = `scaleY(${e.pupilScale})`
+
+  glassesEl.setAttribute('d', e.glasses ? GLASSES : '')
+  glassesEl.style.opacity = e.glasses
+
   browL.style.d   = `path("${e.browL}")`
   browR.style.d   = `path("${e.browR}")`
   mouthEl.style.d = `path("${e.mouth}")`

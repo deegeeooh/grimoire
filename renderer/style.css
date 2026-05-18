@@ -7,6 +7,9 @@
 
 :root {
   --accent: #555555;
+  --ui-accent: #6888a8;
+  --eye-fill: #e8e8e8;
+  --glow: rgba(80,80,80,0.25);
   --bg: #141414;
   --surface: #1e1e1e;
   --text: #e0e0e0;
@@ -97,7 +100,7 @@ body {
   transition: color 0.15s;
 }
 
-#pin-btn.active { color: var(--accent); }
+#pin-btn.active { color: var(--ui-accent); }
 #close-btn { font-size: 17px; }
 
 #pin-btn:hover, #focus-btn:hover, #close-btn:hover { color: var(--text); }
@@ -117,8 +120,10 @@ body {
 
 #head {
   fill: #1c1c1c;
-  stroke: rgba(255,255,255,0.05);
+  stroke: rgba(255,255,255,0.07);
   stroke-width: 1;
+  filter: drop-shadow(0 0 10px var(--glow));
+  transition: filter 0.6s ease;
 }
 
 #brow-l, #brow-r {
@@ -130,10 +135,8 @@ body {
 }
 
 #eye-l, #eye-r {
-  fill: #ebebeb;
-  transform-box: fill-box;
-  transform-origin: center;
-  transition: transform 0.35s cubic-bezier(0.34, 1.4, 0.64, 1);
+  fill: var(--eye-fill);
+  transition: d 0.35s cubic-bezier(0.34, 1.4, 0.64, 1), fill 0.5s ease;
 }
 
 #pupil-l, #pupil-r {
@@ -141,6 +144,15 @@ body {
   transform-box: fill-box;
   transform-origin: center;
   transition: transform 0.35s cubic-bezier(0.34, 1.4, 0.64, 1);
+}
+
+#glasses {
+  fill: none;
+  stroke: var(--text);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  opacity: 0;
+  transition: opacity 0.35s ease;
 }
 
 #mouth {
@@ -178,7 +190,7 @@ body {
 
 #completion-pct {
   font-size: 11px;
-  color: var(--accent);
+  color: #6a8a6a;
   font-variant-numeric: tabular-nums;
   font-weight: 500;
 }
@@ -312,7 +324,7 @@ body {
 }
 
 #ask-input::placeholder { color: var(--text-dim); }
-#ask-input:focus { border-color: var(--accent); }
+#ask-input:focus { border-color: var(--ui-accent); }
 
 #gear-btn {
   background: var(--surface);
@@ -374,7 +386,7 @@ body {
 }
 
 .panel-tab:hover { color: var(--text); }
-.panel-tab.active { color: var(--accent); border-bottom: 1px solid var(--accent); margin-bottom: -1px; }
+.panel-tab.active { color: var(--ui-accent); border-bottom: 1px solid var(--ui-accent); margin-bottom: -1px; }
 
 /* ── Tab content ──────────────────────────────────────────── */
 
@@ -422,13 +434,13 @@ body {
 }
 
 .mode-btn.active {
-  border-color: var(--accent);
-  color: var(--accent);
+  border-color: var(--ui-accent);
+  color: var(--ui-accent);
 }
 
 .modifier-btn.active {
-  border-color: var(--accent);
-  color: var(--accent);
+  border-color: var(--ui-accent);
+  color: var(--ui-accent);
 }
 
 /* ── Persona tab ──────────────────────────────────────────── */
@@ -453,7 +465,7 @@ body {
   min-height: 0;
 }
 
-#persona-editor:focus { border-color: var(--accent); }
+#persona-editor:focus { border-color: var(--ui-accent); }
 
 #persona-save {
   background: var(--surface);
