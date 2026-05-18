@@ -23,7 +23,16 @@
     <!-- Face -->
     <div id="face-container">
       <svg id="face" viewBox="0 0 120 110" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <clipPath id="head-clip">
+            <ellipse cx="60" cy="56" rx="48" ry="46"/>
+          </clipPath>
+          <pattern id="scanlines" x="0" y="0" width="120" height="3" patternUnits="userSpaceOnUse">
+            <rect x="0" y="0" width="120" height="1" fill="rgba(0,0,0,0.13)"/>
+          </pattern>
+        </defs>
         <ellipse id="head" cx="60" cy="56" rx="48" ry="46"/>
+        <rect id="scanlines-overlay" x="0" y="0" width="120" height="110" fill="url(#scanlines)" clip-path="url(#head-clip)"/>
         <path id="brow-l" d="M25,38 Q40,33 55,38"/>
         <path id="brow-r" d="M65,38 Q80,33 95,38"/>
         <path id="eye-l" d="M29,52 A11,6 0 0 1 51,52 A11,3 0 0 1 29,52 Z"/>

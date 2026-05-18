@@ -119,16 +119,16 @@ body {
 #face { width: 120px; height: auto; }
 
 #head {
-  fill: #1c1c1c;
-  stroke: rgba(255,255,255,0.07);
-  stroke-width: 1;
-  filter: drop-shadow(0 0 10px var(--glow));
+  fill: #080f12;
+  stroke: rgba(74,188,188,0.25);
+  stroke-width: 1.5;
+  filter: drop-shadow(0 0 12px var(--glow));
   transition: filter 0.6s ease;
 }
 
 #brow-l, #brow-r {
   fill: none;
-  stroke: var(--text);
+  stroke: #4abcbc;
   stroke-width: 2.5;
   stroke-linecap: round;
   transition: d 0.45s cubic-bezier(0.34, 1.4, 0.64, 1);
@@ -140,7 +140,7 @@ body {
 }
 
 #pupil-l, #pupil-r {
-  fill: #141414;
+  fill: #04080a;
   transform-box: fill-box;
   transform-origin: center;
   transition: transform 0.35s cubic-bezier(0.34, 1.4, 0.64, 1);
@@ -148,7 +148,7 @@ body {
 
 #glasses {
   fill: none;
-  stroke: var(--text);
+  stroke: #4abcbc;
   stroke-width: 1.5;
   stroke-linecap: round;
   opacity: 0;
@@ -157,7 +157,7 @@ body {
 
 #mouth {
   fill: none;
-  stroke: var(--text);
+  stroke: #4abcbc;
   stroke-width: 2.5;
   stroke-linecap: round;
   transition: d 0.45s cubic-bezier(0.34, 1.4, 0.64, 1);

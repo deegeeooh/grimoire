@@ -11,39 +11,39 @@ const EMOTIONS = {
   idle: {
     eyeL: 'M29,52 A11,6 0 0 1 51,52 A11,3 0 0 1 29,52 Z',
     eyeR: 'M69,52 A11,6 0 0 1 91,52 A11,3 0 0 1 69,52 Z',
-    eyeFill: '#e8e8e8', glow: 'rgba(80,80,80,0.2)',    pupilScale: 0.55, glasses: 0,
+    eyeFill: '#2a9898', glow: 'rgba(42,152,152,0.35)',  pupilScale: 0.55, glasses: 0,
     browL: 'M25,36 Q40,31 55,38',  browR: 'M65,38 Q80,34 95,38',
     mouth: 'M42,80 Q58,80 76,75',
-    accent: '#555555'
+    accent: '#2a8888'
   },
   curious: {
     eyeL: 'M29,52 A11,8 0 0 1 51,52 A11,8 0 0 1 29,52 Z',
     eyeR: 'M69,52 A11,8 0 0 1 91,52 A11,8 0 0 1 69,52 Z',
-    eyeFill: '#dde8f5', glow: 'rgba(123,184,240,0.35)', pupilScale: 1.25, glasses: 0,
+    eyeFill: '#30d0e0', glow: 'rgba(48,208,224,0.5)',   pupilScale: 1.25, glasses: 0,
     browL: 'M25,32 Q40,26 55,32',  browR: 'M65,32 Q80,26 95,32',
     mouth: 'M44,78 Q60,78 76,78',
-    accent: '#7bb8f0'
+    accent: '#3ab8d0'
   },
   focused: {
     eyeL: 'M29,52 A11,6 0 0 1 51,52 A11,2 0 0 1 29,52 Z',
     eyeR: 'M69,52 A11,6 0 0 1 91,52 A11,2 0 0 1 69,52 Z',
-    eyeFill: '#e5e0f0', glow: 'rgba(200,162,240,0.3)',  pupilScale: 0.35, glasses: 1,
+    eyeFill: '#1a78a8', glow: 'rgba(26,120,168,0.4)',   pupilScale: 0.35, glasses: 1,
     browL: 'M25,40 Q40,38 55,39',  browR: 'M65,39 Q80,38 95,40',
     mouth: 'M42,80 Q60,80 78,80',
-    accent: '#c8a2f0'
+    accent: '#4a90b8'
   },
   amused: {
     eyeL: 'M29,52 A11,6 0 0 1 51,52 A11,4 0 0 1 29,52 Z',
     eyeR: 'M69,52 A11,6 0 0 1 91,52 A11,4 0 0 1 69,52 Z',
-    eyeFill: '#f5f0d8', glow: 'rgba(240,192,96,0.35)',  pupilScale: 1.0,  glasses: 0,
+    eyeFill: '#30c898', glow: 'rgba(48,200,152,0.4)',   pupilScale: 1.0,  glasses: 0,
     browL: 'M25,33 Q40,27 55,33',  browR: 'M65,33 Q80,27 95,33',
     mouth: 'M38,75 Q60,95 82,75',
-    accent: '#f0c060'
+    accent: '#38b890'
   },
   satisfied: {
     eyeL: 'M29,52 A11,0.5 0 0 1 51,52 A11,0.5 0 0 1 29,52 Z',
     eyeR: 'M69,52 A11,0.5 0 0 1 91,52 A11,0.5 0 0 1 69,52 Z',
-    eyeFill: '#d8f0e0', glow: 'rgba(112,200,120,0.3)',  pupilScale: 0.01, glasses: 0,
+    eyeFill: '#208870', glow: 'rgba(32,136,112,0.35)',  pupilScale: 0.01, glasses: 0,
     browL: 'M25,39 Q40,36 55,39',  browR: 'M65,39 Q80,36 95,39',
     mouth: 'M40,77 Q60,90 80,77',
     accent: '#70c878'
@@ -51,7 +51,7 @@ const EMOTIONS = {
   frustrated: {
     eyeL: 'M29,53 A11,5 0 0 1 51,53 A11,2 0 0 1 29,53 Z',
     eyeR: 'M69,53 A11,5 0 0 1 91,53 A11,2 0 0 1 69,53 Z',
-    eyeFill: '#f0dada', glow: 'rgba(240,112,112,0.4)',  pupilScale: 0.4,  glasses: 0,
+    eyeFill: '#c03030', glow: 'rgba(192,48,48,0.5)',    pupilScale: 0.4,  glasses: 0,
     browL: 'M25,39 Q40,43 55,42',  browR: 'M65,42 Q80,43 95,39',
     mouth: 'M40,80 Q60,78 80,80',
     accent: '#f07070'
