@@ -122,9 +122,7 @@ function applyState(state) {
     const thoughtEl = $('thought-text')
     thoughtEl.textContent = state.thought ? `» ${state.thought}` : '—'
     $('thought-tooltip').textContent = state.thought || ''
-    const overflows = thoughtEl.scrollHeight > thoughtEl.clientHeight
-    thoughtEl.style.cursor = overflows ? 'help' : 'default'
-    $('thought-bar').dataset.overflows = overflows
+    $('thought-bar').dataset.overflows = thoughtEl.scrollHeight > thoughtEl.clientHeight
   }
   const action = ACTIVITY_LABELS[state.activity] ?? null
   const topicEl = $('topic-text')
