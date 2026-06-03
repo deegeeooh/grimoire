@@ -66,7 +66,7 @@ body {
 
 #title-label {
   font-size: 10px;
-  color: var(--text-dim);
+  color: #787888;
   font-variant-numeric: tabular-nums;
   transition: color 0.4s ease;
   letter-spacing: 0.04em;
@@ -186,7 +186,7 @@ body {
 
 #project-name-text {
   font-size: 11px;
-  color: #b0b0b0;
+  color: #c8cce8;
   font-weight: 500;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -213,7 +213,7 @@ body {
 
 #project-desc-text {
   font-size: 9px;
-  color: #555;
+  color: #6a6a7a;
   letter-spacing: 0.03em;
 }
 
@@ -224,7 +224,7 @@ body {
 
 #project-text {
   font-size: 10.5px;
-  color: #909090;
+  color: #8899bb;
   font-style: italic;
   line-height: 1.45;
   display: -webkit-box;
@@ -241,7 +241,7 @@ body {
 
 #thought-text {
   font-size: 9.5px;
-  color: #7a6655;
+  color: #c49060;
   line-height: 1.45;
   display: -webkit-box;
   -webkit-line-clamp: 4;
@@ -262,7 +262,7 @@ body {
   border-radius: 4px;
   padding: 6px 8px;
   font-size: 9px;
-  color: #9a8672;
+  color: #c8a878;
   line-height: 1.5;
   white-space: pre-wrap;
   word-break: break-word;
@@ -284,7 +284,7 @@ body {
 
 #topic-text {
   font-size: 9px;
-  color: #585858;
+  color: #4a9898;
   font-family: ui-monospace, monospace;
   letter-spacing: 0.03em;
   line-height: 1.45;
@@ -301,7 +301,7 @@ body {
 #topic-text[data-state="active"]::after {
   content: ' ·';
   animation: pulse-dot 0.9s ease-in-out infinite;
-  color: #909090;
+  color: #4abcbc;
 }
 
 #topic-text[data-state="idle"] {
