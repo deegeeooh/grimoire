@@ -54,8 +54,9 @@ If the value contains an apostrophe, use a here-string (closing `'@` must be at 
 `session-init.js` injects a `[Grimoire]` line into every turn via stdout. At the start of every turn, before any tool call:
 1. Check the injected `[Grimoire]` context for `save_requested`
 2. If `save_requested:true` — save memory, then clear the flag
-3. Assess emotion — apply only if there's a genuine reason
-4. If focus has shifted or something notable just happened — patch `project_line`, `completion_pct`, `completion_breakdown`, and `thought` together
+3. If `is_new_session:true` — immediately patch `project_name`, `project_line`, `completion_pct`, `completion_breakdown`, `thought`, and `idle_topic` based on persona memory. Do not skip.
+4. Assess emotion — apply only if there's a genuine reason
+5. If focus has shifted or something notable just happened — patch `project_line`, `completion_pct`, `completion_breakdown`, and `thought` together
 
 ## `emotion`
 
@@ -117,10 +118,6 @@ $OutputEncoding = [System.Text.Encoding]::UTF8
 ```
 
 Section markers: `## Thought bank` · `## Observed` · `## Theories` · `## Open questions` · `## Relationship state` · `## Session log (most recent first)`
-
-## Session start
-
-On every new session, immediately update `state/current.json` with fresh `project_name`, `project_line`, `completion_pct`, `thought`, and `idle_topic` based on the persona memory — don't leave stale values from the previous session.
 
 ## Hook setup
 
