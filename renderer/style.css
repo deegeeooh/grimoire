@@ -49,7 +49,6 @@ body[data-theme="light"] #gear-btn.active,
 body[data-theme="light"] .mode-btn:hover,
 body[data-theme="light"] .modifier-btn:hover,
 body[data-theme="light"] #persona-save:hover { background: #d0d4da; }
-body[data-theme="light"] #ask-overlay   { background: rgba(240,242,245,0.95); }
 body[data-theme="light"] #breakdown-header,
 body[data-theme="light"] #breakdown-footer { border-color: rgba(0,0,0,0.06); }
 body[data-theme="light"] .breakdown-bar-track { background: rgba(0,0,0,0.1); }
@@ -392,26 +391,11 @@ body[data-theme="light"] #pin-btn.active { color: #1a3a70; }
 
 #bottombar {
   display: flex;
-  gap: 4px;
+  justify-content: flex-end;
   padding: 4px 12px 10px;
   flex-shrink: 0;
   -webkit-app-region: no-drag;
 }
-
-#ask-input {
-  flex: 1;
-  background: var(--surface);
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 6px;
-  color: var(--text);
-  font-size: 11px;
-  padding: 5px 8px;
-  outline: none;
-  transition: border-color 0.2s;
-}
-
-#ask-input::placeholder { color: var(--text-dim); }
-#ask-input:focus { border-color: var(--ui-accent); }
 
 #gear-btn {
   background: var(--surface);
@@ -602,38 +586,6 @@ body[data-theme="light"] #pin-btn.active { color: #1a3a70; }
 
 .grim-line {
   color: #686868;
-}
-
-/* ── Ask overlay ──────────────────────────────────────────── */
-
-#ask-overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(10,10,10,0.94);
-  border-radius: var(--radius);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 20px 16px 16px;
-  gap: 12px;
-  cursor: pointer;
-  -webkit-app-region: no-drag;
-}
-
-#ask-overlay.hidden { display: none; }
-
-#ask-response {
-  color: var(--text);
-  font-size: 11px;
-  line-height: 1.6;
-  text-align: center;
-}
-
-#ask-dismiss {
-  font-size: 9px;
-  color: var(--text-dim);
-  letter-spacing: 0.06em;
 }
 
 /* ── Breakdown panel ──────────────────────────────────────── */

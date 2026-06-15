@@ -77,16 +77,6 @@ ipcMain.handle('get-config', () => {
   return JSON.parse(fs.readFileSync(configPath, 'utf8'))
 })
 
-ipcMain.on('ask', async (_, message) => {
-  try {
-    const config = JSON.parse(fs.readFileSync(path.join(__dirname, 'grimoire.config.json'), 'utf8'))
-    const { sendMessage } = require('./agents/index')
-    const response = await sendMessage(config, message)
-    if (win && !win.isDestroyed()) win.webContents.send('ask-response', response)
-  } catch (err) {
-    if (win && !win.isDestroyed()) win.webContents.send('ask-error', err.message)
-  }
-})
 
 ipcMain.on('set-steer', (_, steer) => {
   console.log('Steer:', steer)

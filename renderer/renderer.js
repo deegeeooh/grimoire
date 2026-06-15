@@ -304,29 +304,6 @@ async function loadGrim() {
   }
 }
 
-// ── Ask ────────────────────────────────────────────────────
-
-const askInput   = $('ask-input')
-const askOverlay = $('ask-overlay')
-const askResp    = $('ask-response')
-
-askInput.addEventListener('keydown', e => {
-  if (e.key !== 'Enter') return
-  const msg = askInput.value.trim()
-  if (!msg) return
-  window.grimoire.ask(msg)
-  askInput.value = ''
-  askResp.textContent = '...'
-  askOverlay.classList.remove('hidden')
-  gearPanel.classList.add('hidden')
-  gearBtn.classList.remove('active')
-})
-
-askOverlay.addEventListener('click', () => askOverlay.classList.add('hidden'))
-
-window.grimoire.onAskResponse(response => { askResp.textContent = response })
-window.grimoire.onAskError(err => { askResp.textContent = `(${err})` })
-
 // ── State bridge ───────────────────────────────────────────
 
 window.grimoire.onStateUpdate(applyState)
