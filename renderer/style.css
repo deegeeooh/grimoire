@@ -30,7 +30,8 @@ body[data-theme="light"] #breakdown-panel {
   box-shadow: 0 8px 32px rgba(0,0,0,0.15);
 }
 
-body[data-theme="light"] #head          { fill: #e8eef0; }
+body[data-theme="light"] #head          { fill: #3a5060; stroke: rgba(74,188,188,0.5); }
+body[data-theme="light"] #project-name-text { color: #1a2050; }
 body[data-theme="light"] #gear-panel    { background: #e4e7ec; }
 body[data-theme="light"] #panel-tabs,
 body[data-theme="light"] #steer-modifiers { border-color: rgba(0,0,0,0.1); }
@@ -154,7 +155,10 @@ body {
   transition: color 0.15s;
 }
 
-#pin-btn.active { color: var(--ui-accent); }
+#pin-btn { color: #888; }
+body[data-theme="light"] #pin-btn { color: #777; }
+#pin-btn.active { color: #6aabdc; }
+body[data-theme="light"] #pin-btn.active { color: #1a3a70; }
 #close-btn { font-size: 17px; }
 
 #pin-btn:hover, #focus-btn:hover, #close-btn:hover { color: var(--text); }

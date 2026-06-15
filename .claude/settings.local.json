@@ -21,7 +21,21 @@
       "Bash(gh api *)",
       "Bash(python -c \"import sys, base64; print\\(base64.b64decode\\(sys.stdin.read\\(\\)\\).decode\\('utf-8'\\)\\)\")",
       "Bash(curl -s https://raw.githubusercontent.com/deegeeooh/grimoire/main/PROJECT.html)",
-      "WebFetch(domain:raw.githubusercontent.com)"
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "Bash('@ *)",
+      "WebSearch",
+      "Bash(claude *)",
+      "WebFetch(domain:claudefa.st)",
+      "Bash(dir C:\\\\Users\\\\Pepijn.Bakker\\\\Documents\\\\ClaudeCode\\\\grimoire /b /a)",
+      "Bash('{\"emotion\":\"idle\",\"activity\":\"idle\",\"project_name\":\"Grimoire\",\"topic\":\"session start\"}')",
+      "Bash(Get-ChildItem *)",
+      "Bash(git checkout *)",
+      "Bash(git fetch *)",
+      "Bash(gh pr *)",
+      "Bash(git config *)",
+      "Bash(git -C \"C:/Users/Pepijn.Bakker/OneDrive - E-Mergo B.V/Documents/ClaudeCode/grimoire\" log --oneline -3)",
+      "WebFetch(domain:docs.mendix.com)",
+      "Bash(cat \"/c/Users/Pepijn.Bakker/.claude/plans/so-i-would-like-wobbly-wigderson.md\" 2>/dev/null || echo \"not found\")"
     ]
   }
 }
