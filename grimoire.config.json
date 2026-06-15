@@ -1,23 +1,58 @@
 {
   "persona": {
     "name": "Grim",
-    "emotions": ["idle", "curious", "focused", "amused", "skeptical", "satisfied", "frustrated", "surprised", "concerned"]
+    "emotions": [
+      "idle",
+      "curious",
+      "focused",
+      "amused",
+      "skeptical",
+      "satisfied",
+      "frustrated",
+      "surprised",
+      "concerned"
+    ]
   },
   "agent": {
     "provider": "anthropic",
     "model": "claude-sonnet-4-6",
     "apiKey": ""
   },
+  "theme": "dark",
   "steer": {
     "modes": [
-      { "id": "hurry",    "label": "I'm in a hurry",   "description": "Be concise, skip exploration" },
-      { "id": "explore",  "label": "Let's explore",     "description": "Don't rush to solutions" },
-      { "id": "explain",  "label": "Explain as you go", "description": "Narrate decisions" },
-      { "id": "just-do",  "label": "Just do it",        "description": "Minimal confirmation, take initiative" },
-      { "id": "learning", "label": "I'm learning",      "description": "Slower, more explanation" }
+      {
+        "id": "hurry",
+        "label": "I'm in a hurry",
+        "description": "Be concise, skip exploration"
+      },
+      {
+        "id": "explore",
+        "label": "Let's explore",
+        "description": "Don't rush to solutions"
+      },
+      {
+        "id": "explain",
+        "label": "Explain as you go",
+        "description": "Narrate decisions"
+      },
+      {
+        "id": "just-do",
+        "label": "Just do it",
+        "description": "Minimal confirmation, take initiative"
+      },
+      {
+        "id": "learning",
+        "label": "I'm learning",
+        "description": "Slower, more explanation"
+      }
     ],
     "modifiers": [
-      { "id": "minimise-tokens", "label": "Minimise tokens", "description": "Short responses, no summaries, cut the fluff" }
+      {
+        "id": "minimise-tokens",
+        "label": "Minimise tokens",
+        "description": "Short responses, no summaries, cut the fluff"
+      }
     ]
   }
 }

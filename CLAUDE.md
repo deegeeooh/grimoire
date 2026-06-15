@@ -57,6 +57,7 @@ If the value contains an apostrophe, use a here-string (closing `'@` must be at 
 3. If `is_new_session:true` — immediately patch `project_name`, `project_line`, `completion_pct`, `completion_breakdown`, `thought`, and `idle_topic` based on persona memory. Do not skip.
 4. Assess emotion — apply only if there's a genuine reason
 5. If focus has shifted or something notable just happened — patch `project_line`, `completion_pct`, `completion_breakdown`, and `thought` together
+6. If the work is a side task unrelated to the home project — switch `project_name` and `project_desc` to reflect the actual task. Switch back when it's done.
 
 ## `emotion`
 

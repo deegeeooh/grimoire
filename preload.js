@@ -13,5 +13,6 @@ contextBridge.exposeInMainWorld('grimoire', {
   saveMemory:    ()       => ipcRenderer.send('save-memory'),
   readFile:       (key)            => ipcRenderer.invoke('read-file', key),
   writeFile:      (key, content)   => ipcRenderer.invoke('write-file', key, content),
-  toggleBreakdown:(open)           => ipcRenderer.send('toggle-breakdown', open)
+  toggleBreakdown:(open)           => ipcRenderer.send('toggle-breakdown', open),
+  setTheme:       (theme)          => ipcRenderer.send('set-theme', theme)
 })

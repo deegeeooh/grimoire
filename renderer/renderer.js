@@ -429,6 +429,24 @@ $('completion-pct').addEventListener('click', () => {
   }
 })
 
+// ── Theme toggle ───────────────────────────────────────────
+
+function applyTheme(theme) {
+  document.body.dataset.theme = theme || 'dark'
+  $('theme-btn').textContent = theme === 'light' ? '🌙' : '☀'
+}
+
+$('theme-btn').addEventListener('click', () => {
+  const next = document.body.dataset.theme === 'light' ? 'dark' : 'light'
+  applyTheme(next)
+  window.grimoire.setTheme(next)
+})
+
 // ── Init ───────────────────────────────────────────────────
 
-applyEmotion('idle')
+applyEmotion('idle');
+
+(async () => {
+  const config = await window.grimoire.getConfig()
+  applyTheme(config.theme || 'dark')
+})()

@@ -121,6 +121,13 @@ ipcMain.handle('write-file', (_, key, content) => {
   fs.writeFileSync(filePath, content, 'utf8')
 })
 
+ipcMain.on('set-theme', (_, theme) => {
+  const configPath = path.join(__dirname, 'grimoire.config.json')
+  const config = JSON.parse(fs.readFileSync(configPath, 'utf8'))
+  config.theme = theme
+  fs.writeFileSync(configPath, JSON.stringify(config, null, 2))
+})
+
 ipcMain.on('toggle-breakdown', (_, open) => {
   if (!win) return
   const b = win.getBounds()

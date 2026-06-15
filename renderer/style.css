@@ -17,6 +17,42 @@
   --radius: 12px;
 }
 
+body[data-theme="light"] {
+  --bg: #f0f2f5;
+  --surface: #e0e3e8;
+  --text: #1a1c22;
+  --text-dim: #7a7a8a;
+}
+
+body[data-theme="light"] #widget,
+body[data-theme="light"] #breakdown-panel {
+  border-color: rgba(0,0,0,0.1);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+}
+
+body[data-theme="light"] #head          { fill: #e8eef0; }
+body[data-theme="light"] #gear-panel    { background: #e4e7ec; }
+body[data-theme="light"] #panel-tabs,
+body[data-theme="light"] #steer-modifiers { border-color: rgba(0,0,0,0.1); }
+body[data-theme="light"] #topic-bar     { border-color: rgba(0,0,0,0.07); }
+body[data-theme="light"] #thought-tooltip {
+  background: #eef0f4;
+  border-color: rgba(0,0,0,0.15);
+  color: #8a6030;
+}
+body[data-theme="light"] .grim-title    { color: #555; }
+body[data-theme="light"] .grim-entry    { color: #333; }
+body[data-theme="light"] .grim-line     { color: #666; }
+body[data-theme="light"] #gear-btn:hover,
+body[data-theme="light"] #gear-btn.active,
+body[data-theme="light"] .mode-btn:hover,
+body[data-theme="light"] .modifier-btn:hover,
+body[data-theme="light"] #persona-save:hover { background: #d0d4da; }
+body[data-theme="light"] #ask-overlay   { background: rgba(240,242,245,0.95); }
+body[data-theme="light"] #breakdown-header,
+body[data-theme="light"] #breakdown-footer { border-color: rgba(0,0,0,0.06); }
+body[data-theme="light"] .breakdown-bar-track { background: rgba(0,0,0,0.1); }
+
 body {
   background: transparent;
   font-family: system-ui, -apple-system, sans-serif;
@@ -91,6 +127,20 @@ body {
 .indicator.dirty   { color: #f0a060; }
 .indicator.pending { color: #e8d040; cursor: default; }
 .indicator.clean   { color: #70c878; cursor: default; }
+
+#theme-btn {
+  background: none;
+  border: none;
+  color: var(--text-dim);
+  cursor: pointer;
+  font-size: 12px;
+  line-height: 1;
+  padding: 0 2px;
+  -webkit-app-region: no-drag;
+  transition: color 0.15s;
+}
+
+#theme-btn:hover { color: var(--text); }
 
 #pin-btn, #focus-btn, #close-btn {
   background: none;
